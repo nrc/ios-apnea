@@ -1,0 +1,563 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 48;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		01C3CDFC1FFA226A0004C70F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01C3CDFB1FFA226A0004C70F /* AppDelegate.swift */; };
+		01C3CDFE1FFA226A0004C70F /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01C3CDFD1FFA226A0004C70F /* ViewController.swift */; };
+		01C3CE011FFA226A0004C70F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 01C3CDFF1FFA226A0004C70F /* Main.storyboard */; };
+		01C3CE031FFA226A0004C70F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 01C3CE021FFA226A0004C70F /* Assets.xcassets */; };
+		01C3CE061FFA226A0004C70F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 01C3CE041FFA226A0004C70F /* LaunchScreen.storyboard */; };
+		01C3CE111FFA226A0004C70F /* Apnea_TimerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01C3CE101FFA226A0004C70F /* Apnea_TimerTests.swift */; };
+		01C3CE1C1FFA226A0004C70F /* Apnea_TimerUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01C3CE1B1FFA226A0004C70F /* Apnea_TimerUITests.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		01C3CE0D1FFA226A0004C70F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 01C3CDF01FFA226A0004C70F /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 01C3CDF71FFA226A0004C70F;
+			remoteInfo = "Apnea Timer";
+		};
+		01C3CE181FFA226A0004C70F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 01C3CDF01FFA226A0004C70F /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 01C3CDF71FFA226A0004C70F;
+			remoteInfo = "Apnea Timer";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		01C3CDF81FFA226A0004C70F /* Apnea Timer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Apnea Timer.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		01C3CDFB1FFA226A0004C70F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		01C3CDFD1FFA226A0004C70F /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		01C3CE001FFA226A0004C70F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		01C3CE021FFA226A0004C70F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		01C3CE051FFA226A0004C70F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		01C3CE071FFA226A0004C70F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		01C3CE0C1FFA226A0004C70F /* Apnea TimerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Apnea TimerTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		01C3CE101FFA226A0004C70F /* Apnea_TimerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Apnea_TimerTests.swift; sourceTree = "<group>"; };
+		01C3CE121FFA226A0004C70F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		01C3CE171FFA226A0004C70F /* Apnea TimerUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Apnea TimerUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		01C3CE1B1FFA226A0004C70F /* Apnea_TimerUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Apnea_TimerUITests.swift; sourceTree = "<group>"; };
+		01C3CE1D1FFA226A0004C70F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		01C3CDF51FFA226A0004C70F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		01C3CE091FFA226A0004C70F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		01C3CE141FFA226A0004C70F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		01C3CDEF1FFA226A0004C70F = {
+			isa = PBXGroup;
+			children = (
+				01C3CDFA1FFA226A0004C70F /* Apnea Timer */,
+				01C3CE0F1FFA226A0004C70F /* Apnea TimerTests */,
+				01C3CE1A1FFA226A0004C70F /* Apnea TimerUITests */,
+				01C3CDF91FFA226A0004C70F /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		01C3CDF91FFA226A0004C70F /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				01C3CDF81FFA226A0004C70F /* Apnea Timer.app */,
+				01C3CE0C1FFA226A0004C70F /* Apnea TimerTests.xctest */,
+				01C3CE171FFA226A0004C70F /* Apnea TimerUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		01C3CDFA1FFA226A0004C70F /* Apnea Timer */ = {
+			isa = PBXGroup;
+			children = (
+				01C3CDFB1FFA226A0004C70F /* AppDelegate.swift */,
+				01C3CDFD1FFA226A0004C70F /* ViewController.swift */,
+				01C3CDFF1FFA226A0004C70F /* Main.storyboard */,
+				01C3CE021FFA226A0004C70F /* Assets.xcassets */,
+				01C3CE041FFA226A0004C70F /* LaunchScreen.storyboard */,
+				01C3CE071FFA226A0004C70F /* Info.plist */,
+			);
+			path = "Apnea Timer";
+			sourceTree = "<group>";
+		};
+		01C3CE0F1FFA226A0004C70F /* Apnea TimerTests */ = {
+			isa = PBXGroup;
+			children = (
+				01C3CE101FFA226A0004C70F /* Apnea_TimerTests.swift */,
+				01C3CE121FFA226A0004C70F /* Info.plist */,
+			);
+			path = "Apnea TimerTests";
+			sourceTree = "<group>";
+		};
+		01C3CE1A1FFA226A0004C70F /* Apnea TimerUITests */ = {
+			isa = PBXGroup;
+			children = (
+				01C3CE1B1FFA226A0004C70F /* Apnea_TimerUITests.swift */,
+				01C3CE1D1FFA226A0004C70F /* Info.plist */,
+			);
+			path = "Apnea TimerUITests";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		01C3CDF71FFA226A0004C70F /* Apnea Timer */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 01C3CE201FFA226A0004C70F /* Build configuration list for PBXNativeTarget "Apnea Timer" */;
+			buildPhases = (
+				01C3CDF41FFA226A0004C70F /* Sources */,
+				01C3CDF51FFA226A0004C70F /* Frameworks */,
+				01C3CDF61FFA226A0004C70F /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Apnea Timer";
+			productName = "Apnea Timer";
+			productReference = 01C3CDF81FFA226A0004C70F /* Apnea Timer.app */;
+			productType = "com.apple.product-type.application";
+		};
+		01C3CE0B1FFA226A0004C70F /* Apnea TimerTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 01C3CE231FFA226A0004C70F /* Build configuration list for PBXNativeTarget "Apnea TimerTests" */;
+			buildPhases = (
+				01C3CE081FFA226A0004C70F /* Sources */,
+				01C3CE091FFA226A0004C70F /* Frameworks */,
+				01C3CE0A1FFA226A0004C70F /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				01C3CE0E1FFA226A0004C70F /* PBXTargetDependency */,
+			);
+			name = "Apnea TimerTests";
+			productName = "Apnea TimerTests";
+			productReference = 01C3CE0C1FFA226A0004C70F /* Apnea TimerTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		01C3CE161FFA226A0004C70F /* Apnea TimerUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 01C3CE261FFA226A0004C70F /* Build configuration list for PBXNativeTarget "Apnea TimerUITests" */;
+			buildPhases = (
+				01C3CE131FFA226A0004C70F /* Sources */,
+				01C3CE141FFA226A0004C70F /* Frameworks */,
+				01C3CE151FFA226A0004C70F /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				01C3CE191FFA226A0004C70F /* PBXTargetDependency */,
+			);
+			name = "Apnea TimerUITests";
+			productName = "Apnea TimerUITests";
+			productReference = 01C3CE171FFA226A0004C70F /* Apnea TimerUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		01C3CDF01FFA226A0004C70F /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0920;
+				LastUpgradeCheck = 0920;
+				ORGANIZATIONNAME = "Nick Cameron";
+				TargetAttributes = {
+					01C3CDF71FFA226A0004C70F = {
+						CreatedOnToolsVersion = 9.2;
+						ProvisioningStyle = Automatic;
+					};
+					01C3CE0B1FFA226A0004C70F = {
+						CreatedOnToolsVersion = 9.2;
+						ProvisioningStyle = Automatic;
+						TestTargetID = 01C3CDF71FFA226A0004C70F;
+					};
+					01C3CE161FFA226A0004C70F = {
+						CreatedOnToolsVersion = 9.2;
+						ProvisioningStyle = Automatic;
+						TestTargetID = 01C3CDF71FFA226A0004C70F;
+					};
+				};
+			};
+			buildConfigurationList = 01C3CDF31FFA226A0004C70F /* Build configuration list for PBXProject "Apnea Timer" */;
+			compatibilityVersion = "Xcode 8.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 01C3CDEF1FFA226A0004C70F;
+			productRefGroup = 01C3CDF91FFA226A0004C70F /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				01C3CDF71FFA226A0004C70F /* Apnea Timer */,
+				01C3CE0B1FFA226A0004C70F /* Apnea TimerTests */,
+				01C3CE161FFA226A0004C70F /* Apnea TimerUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		01C3CDF61FFA226A0004C70F /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				01C3CE061FFA226A0004C70F /* LaunchScreen.storyboard in Resources */,
+				01C3CE031FFA226A0004C70F /* Assets.xcassets in Resources */,
+				01C3CE011FFA226A0004C70F /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		01C3CE0A1FFA226A0004C70F /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		01C3CE151FFA226A0004C70F /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		01C3CDF41FFA226A0004C70F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				01C3CDFE1FFA226A0004C70F /* ViewController.swift in Sources */,
+				01C3CDFC1FFA226A0004C70F /* AppDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		01C3CE081FFA226A0004C70F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				01C3CE111FFA226A0004C70F /* Apnea_TimerTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		01C3CE131FFA226A0004C70F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				01C3CE1C1FFA226A0004C70F /* Apnea_TimerUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		01C3CE0E1FFA226A0004C70F /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 01C3CDF71FFA226A0004C70F /* Apnea Timer */;
+			targetProxy = 01C3CE0D1FFA226A0004C70F /* PBXContainerItemProxy */;
+		};
+		01C3CE191FFA226A0004C70F /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 01C3CDF71FFA226A0004C70F /* Apnea Timer */;
+			targetProxy = 01C3CE181FFA226A0004C70F /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		01C3CDFF1FFA226A0004C70F /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				01C3CE001FFA226A0004C70F /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		01C3CE041FFA226A0004C70F /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				01C3CE051FFA226A0004C70F /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		01C3CE1E1FFA226A0004C70F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		01C3CE1F1FFA226A0004C70F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		01C3CE211FFA226A0004C70F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 23CS696WZT;
+				INFOPLIST_FILE = "Apnea Timer/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.ncameron.Apnea-Timer";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		01C3CE221FFA226A0004C70F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 23CS696WZT;
+				INFOPLIST_FILE = "Apnea Timer/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.ncameron.Apnea-Timer";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		01C3CE241FFA226A0004C70F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 23CS696WZT;
+				INFOPLIST_FILE = "Apnea TimerTests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.ncameron.Apnea-TimerTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Apnea Timer.app/Apnea Timer";
+			};
+			name = Debug;
+		};
+		01C3CE251FFA226A0004C70F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 23CS696WZT;
+				INFOPLIST_FILE = "Apnea TimerTests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.ncameron.Apnea-TimerTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Apnea Timer.app/Apnea Timer";
+			};
+			name = Release;
+		};
+		01C3CE271FFA226A0004C70F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 23CS696WZT;
+				INFOPLIST_FILE = "Apnea TimerUITests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.ncameron.Apnea-TimerUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = "Apnea Timer";
+			};
+			name = Debug;
+		};
+		01C3CE281FFA226A0004C70F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 23CS696WZT;
+				INFOPLIST_FILE = "Apnea TimerUITests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.ncameron.Apnea-TimerUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = "Apnea Timer";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		01C3CDF31FFA226A0004C70F /* Build configuration list for PBXProject "Apnea Timer" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				01C3CE1E1FFA226A0004C70F /* Debug */,
+				01C3CE1F1FFA226A0004C70F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		01C3CE201FFA226A0004C70F /* Build configuration list for PBXNativeTarget "Apnea Timer" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				01C3CE211FFA226A0004C70F /* Debug */,
+				01C3CE221FFA226A0004C70F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		01C3CE231FFA226A0004C70F /* Build configuration list for PBXNativeTarget "Apnea TimerTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				01C3CE241FFA226A0004C70F /* Debug */,
+				01C3CE251FFA226A0004C70F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		01C3CE261FFA226A0004C70F /* Build configuration list for PBXNativeTarget "Apnea TimerUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				01C3CE271FFA226A0004C70F /* Debug */,
+				01C3CE281FFA226A0004C70F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 01C3CDF01FFA226A0004C70F /* Project object */;
+}
