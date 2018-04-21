@@ -8,18 +8,29 @@
 
 import UIKit
 
-class ViewController: UIViewController {
-
+class ViewController: UIViewController, TimeView {
+    //MARK: Properties
+    @IBOutlet weak var timerLabel: UILabel!
+    var model: TimeModel!
+    
+    //MARK: Actions
+    @IBAction func tap(_ sender: UITapGestureRecognizer) {
+        self.model.start()
+    }
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+        model = TimeModel.init(plan: defaultO2Plan(), view: self)
+        self.timerLabel.text = model.label()
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
 
-
+    func update() {
+        self.timerLabel.text = model.label()
+    }
 }
 
