@@ -21,6 +21,10 @@ class ViewController: UIViewController, TimeView {
         self.model.start()
     }
     
+    @IBAction func unwindFromConfigure(sender: UIStoryboardSegue) {
+        // TODO update model with plan
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
         // TODO log book

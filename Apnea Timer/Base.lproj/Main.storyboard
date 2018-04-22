@@ -36,7 +36,11 @@
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                 <items>
                                     <barButtonItem systemItem="flexibleSpace" id="oJ7-fX-IW2"/>
-                                    <barButtonItem systemItem="organize" id="4Qm-Nk-PRb"/>
+                                    <barButtonItem systemItem="organize" id="4Qm-Nk-PRb">
+                                        <connections>
+                                            <segue destination="TgX-Ag-pab" kind="presentation" id="geZ-5t-abU"/>
+                                        </connections>
+                                    </barButtonItem>
                                     <barButtonItem systemItem="flexibleSpace" id="Fjf-1u-feG"/>
                                     <barButtonItem systemItem="stop" id="Ujc-Fc-4vC"/>
                                     <barButtonItem systemItem="flexibleSpace" id="LNd-e9-otW"/>
@@ -70,6 +74,62 @@
                 </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="136.80000000000001" y="133.74384236453201"/>
+        </scene>
+        <!--Configure-->
+        <scene sceneID="x0k-6n-pb2">
+            <objects>
+                <viewController id="Yge-F3-KDj" customClass="ConfigureController" customModule="Apnea_Timer" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="LsL-r4-3b4">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <viewLayoutGuide key="safeArea" id="Z78-1G-whd"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="Configure" id="8I8-Di-L9I">
+                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="5IX-5I-hpc">
+                            <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <connections>
+                                <segue destination="XVt-SR-JTS" kind="unwind" unwindAction="unwindFromConfigureWithSender:" id="a8Y-mQ-Mwq"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="EMv-Ks-Yjh">
+                            <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <connections>
+                                <segue destination="XVt-SR-JTS" kind="unwind" unwindAction="unwindFromConfigureWithSender:" id="GVN-Wo-K0n"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="cancelButton" destination="5IX-5I-hpc" id="5jk-Ka-nij"/>
+                        <outlet property="saveButton" destination="EMv-Ks-Yjh" id="oTw-dW-95D"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="fLw-69-gmg" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="XVt-SR-JTS" userLabel="Exit" sceneMemberID="exit"/>
+            </objects>
+            <point key="canvasLocation" x="2207.1999999999998" y="139.65517241379311"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="NXu-Pz-7Rg">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="TgX-Ag-pab" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="1J9-TD-JCM">
+                        <rect key="frame" x="0.0" y="44" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="barTintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <textAttributes key="titleTextAttributes">
+                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </textAttributes>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="Yge-F3-KDj" kind="relationship" relationship="rootViewController" id="nhM-Y7-geh"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="fMo-kB-0DT" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1264.8" y="139.65517241379311"/>
         </scene>
     </scenes>
 </document>

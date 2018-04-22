@@ -10,6 +10,7 @@
 		0194FC05208B272B00AE6291 /* TimeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0194FC04208B272B00AE6291 /* TimeModel.swift */; };
 		0194FC07208B2BA100AE6291 /* TimeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0194FC06208B2BA100AE6291 /* TimeView.swift */; };
 		0194FC09208B319800AE6291 /* Plan.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0194FC08208B319800AE6291 /* Plan.swift */; };
+		0194FC0B208C59A800AE6291 /* ConfigureController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0194FC0A208C59A800AE6291 /* ConfigureController.swift */; };
 		01C3CDFC1FFA226A0004C70F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01C3CDFB1FFA226A0004C70F /* AppDelegate.swift */; };
 		01C3CDFE1FFA226A0004C70F /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01C3CDFD1FFA226A0004C70F /* ViewController.swift */; };
 		01C3CE011FFA226A0004C70F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 01C3CDFF1FFA226A0004C70F /* Main.storyboard */; };
@@ -40,6 +41,7 @@
 		0194FC04208B272B00AE6291 /* TimeModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeModel.swift; sourceTree = "<group>"; };
 		0194FC06208B2BA100AE6291 /* TimeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeView.swift; sourceTree = "<group>"; };
 		0194FC08208B319800AE6291 /* Plan.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Plan.swift; sourceTree = "<group>"; };
+		0194FC0A208C59A800AE6291 /* ConfigureController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigureController.swift; sourceTree = "<group>"; };
 		01C3CDF81FFA226A0004C70F /* Apnea Timer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Apnea Timer.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		01C3CDFB1FFA226A0004C70F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		01C3CDFD1FFA226A0004C70F /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -106,6 +108,7 @@
 				01C3CDFB1FFA226A0004C70F /* AppDelegate.swift */,
 				01C3CDFD1FFA226A0004C70F /* ViewController.swift */,
 				01C3CDFF1FFA226A0004C70F /* Main.storyboard */,
+				0194FC0A208C59A800AE6291 /* ConfigureController.swift */,
 				01C3CE021FFA226A0004C70F /* Assets.xcassets */,
 				01C3CE041FFA226A0004C70F /* LaunchScreen.storyboard */,
 				01C3CE071FFA226A0004C70F /* Info.plist */,
@@ -269,6 +272,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				01C3CDFE1FFA226A0004C70F /* ViewController.swift in Sources */,
+				0194FC0B208C59A800AE6291 /* ConfigureController.swift in Sources */,
 				0194FC05208B272B00AE6291 /* TimeModel.swift in Sources */,
 				01C3CDFC1FFA226A0004C70F /* AppDelegate.swift in Sources */,
 				0194FC07208B2BA100AE6291 /* TimeView.swift in Sources */,
