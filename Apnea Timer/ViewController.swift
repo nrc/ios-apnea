@@ -25,7 +25,7 @@ class ViewController: UIViewController, TimeView {
         // TODO stop/restart button
         // TODO plan selector
         // TODO log book
-        model = TimeModel.init(plan: defaultO2Plan(), view: self)
+        model = TimeModel.init(plan: testOneBreathCO2Plan(), view: self)
         update()
     }
 

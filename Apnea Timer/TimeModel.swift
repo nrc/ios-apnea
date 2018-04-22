@@ -24,12 +24,13 @@ class TimeModel {
     
     // TODO timer should keep running if user switches to another app
     func start() {
-        if state != TimeState.FRESH {
-            return
+        if state == TimeState.FRESH || state == TimeState.PAUSED {
+            timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: (#selector(TimeModel.tick)), userInfo: nil, repeats: true)
+            if state == TimeState.FRESH {
+                self.view.onStart()
+            }
+            state = TimeState.RUNNING
         }
-        state = TimeState.RUNNING
-        timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: (#selector(TimeModel.tick)), userInfo: nil, repeats: true)
-        self.view.onStart()
     }
     
     func stop() {
@@ -39,6 +40,11 @@ class TimeModel {
         state = TimeState.DONE
         timer!.invalidate()
         self.view.onStop()
+    }
+    
+    func pause() {
+        state = TimeState.PAUSED
+        timer!.invalidate()
     }
     
     @objc func tick() {
@@ -55,8 +61,11 @@ class TimeModel {
     func handleStateChange() {
         let next = plan.nextState()
         if let next = next {
-            // TODO handle nil time
-            seconds = next.time!
+            if let time = next.time {
+                seconds = time
+            } else {
+                pause()
+            }
             label = next.label
         } else {
             label = "done"
@@ -65,6 +74,10 @@ class TimeModel {
     }
     
     func timeLabel() -> String {
+        if state == TimeState.PAUSED {
+            return "-:--"
+        }
+
         let minutes = self.seconds / 60
         let seconds = self.seconds % 60
         return String(format: "\(minutes):%02d", seconds)
@@ -78,5 +91,6 @@ class TimeModel {
 enum TimeState {
     case FRESH
     case RUNNING
+    case PAUSED
     case DONE
 }
