@@ -12,6 +12,8 @@ class ViewController: UIViewController, TimeView {
     //MARK: Properties
     @IBOutlet weak var timerLabel: UILabel!
     @IBOutlet weak var actionLabel: UILabel!
+    @IBOutlet weak var toolBar: UIToolbar!
+
     var model: TimeModel!
     
     //MARK: Actions
@@ -19,14 +21,16 @@ class ViewController: UIViewController, TimeView {
         self.model.start()
     }
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-        // TODO stop/restart button
-        // TODO plan selector
         // TODO log book
-        model = TimeModel.init(plan: testOneBreathCO2Plan(), view: self)
+        setModel()
         update()
+    }
+    
+    func setModel() {
+        // TODO plan selector
+        model = TimeModel.init(plan: testOneBreathCO2Plan(), view: self)
     }
 
     override func didReceiveMemoryWarning() {
@@ -40,10 +44,20 @@ class ViewController: UIViewController, TimeView {
     
     func onStart() {
         UIApplication.shared.isIdleTimerDisabled = true;
+        toolBar.items![3] = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.stop, target: self, action: #selector(ViewController.tapStopButton))
     }
     
     func onStop() {
         UIApplication.shared.isIdleTimerDisabled = false;
+        toolBar.items![3] = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.refresh, target: self, action: #selector(ViewController.tapRestartButton))
+    }
+    
+    @objc func tapStopButton() {
+        model.stop()
+    }
+    
+    @objc func tapRestartButton() {
+        setModel()
+        update()
     }
 }
-

@@ -34,12 +34,13 @@ class TimeModel {
     }
     
     func stop() {
-        if state != TimeState.RUNNING {
-            return
+        if state == TimeState.RUNNING {
+            timer!.invalidate()
+        }
+        if state == TimeState.RUNNING || state == TimeState.PAUSED {
+            self.view.onStop()
         }
         state = TimeState.DONE
-        timer!.invalidate()
-        self.view.onStop()
     }
     
     func pause() {
