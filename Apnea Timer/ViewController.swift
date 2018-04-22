@@ -34,7 +34,7 @@ class ViewController: UIViewController, TimeView {
     
     func setModel() {
         // TODO plan selector
-        model = TimeModel.init(plan: testOneBreathCO2Plan(), view: self)
+        model = TimeModel.init(plan: testOneBreathCO2Plan(), view: self, beeper: BeepVibrate.init())
     }
 
     override func didReceiveMemoryWarning() {

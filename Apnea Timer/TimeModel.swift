@@ -15,10 +15,12 @@ class TimeModel {
     internal var label = ""
     internal var plan: Plan
     internal var view: TimeView
+    internal var beeper: Beeper
     
-    init(plan: Plan, view: TimeView) {
+    init(plan: Plan, view: TimeView, beeper: Beeper) {
         self.view = view
         self.plan = plan
+        self.beeper = beeper
         handleStateChange()
     }
     
@@ -60,6 +62,7 @@ class TimeModel {
     }
     
     func handleStateChange() {
+        beeper.beep()
         let next = plan.nextState()
         if let next = next {
             if let time = next.time {
