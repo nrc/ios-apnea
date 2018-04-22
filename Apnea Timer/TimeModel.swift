@@ -9,26 +9,27 @@
 import Foundation
 
 class TimeModel {
-    internal var state: TimeState
-    internal var timer: Timer?
-    internal var seconds: Int
+    internal var state: TimeState = TimeState.FRESH
+    internal var timer: Timer? = nil
+    internal var seconds: Int = 0
+    internal var label = ""
     internal var plan: Plan
     internal var view: TimeView
     
     init(plan: Plan, view: TimeView) {
-        state = TimeState.FRESH
-        timer = nil
-        self.seconds = plan.nextState()!.time
         self.view = view
         self.plan = plan
+        handleStateChange()
     }
     
+    // TODO timer should keep running if user switches to another app
     func start() {
         if state != TimeState.FRESH {
             return
         }
         state = TimeState.RUNNING
         timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: (#selector(TimeModel.tick)), userInfo: nil, repeats: true)
+        self.view.onStart()
     }
     
     func stop() {
@@ -37,6 +38,7 @@ class TimeModel {
         }
         state = TimeState.DONE
         timer!.invalidate()
+        self.view.onStop()
     }
     
     @objc func tick() {
@@ -45,22 +47,31 @@ class TimeModel {
         }
         seconds -= 1
         if seconds <= 0 {
-            let next = plan.nextState()
-            if let next = next {
-                seconds = next.time
-                // TODO use label
-            } else {
-                stop()
-            }
+            handleStateChange()
         }
         self.view.update()
     }
     
-    func label() -> String {
+    func handleStateChange() {
+        let next = plan.nextState()
+        if let next = next {
+            // TODO handle nil time
+            seconds = next.time!
+            label = next.label
+        } else {
+            label = "done"
+            stop()
+        }
+    }
+    
+    func timeLabel() -> String {
         let minutes = self.seconds / 60
         let seconds = self.seconds % 60
-        // TODO seconds should always be two digits
-        return "\(minutes):\(seconds)"
+        return String(format: "\(minutes):%02d", seconds)
+    }
+    
+    func textLabel() -> String {
+        return label
     }
 }
 

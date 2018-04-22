@@ -10,4 +10,6 @@ import Foundation
 
 protocol TimeView {
     func update()
+    func onStart()
+    func onStop()
 }

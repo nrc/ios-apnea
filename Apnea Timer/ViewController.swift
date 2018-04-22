@@ -11,6 +11,7 @@ import UIKit
 class ViewController: UIViewController, TimeView {
     //MARK: Properties
     @IBOutlet weak var timerLabel: UILabel!
+    @IBOutlet weak var actionLabel: UILabel!
     var model: TimeModel!
     
     //MARK: Actions
@@ -21,8 +22,11 @@ class ViewController: UIViewController, TimeView {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        // TODO stop/restart button
+        // TODO plan selector
+        // TODO log book
         model = TimeModel.init(plan: defaultO2Plan(), view: self)
-        self.timerLabel.text = model.label()
+        update()
     }
 
     override func didReceiveMemoryWarning() {
@@ -30,7 +34,16 @@ class ViewController: UIViewController, TimeView {
     }
 
     func update() {
-        self.timerLabel.text = model.label()
+        timerLabel.text = model.timeLabel()
+        actionLabel.text = model.textLabel()
+    }
+    
+    func onStart() {
+        UIApplication.shared.isIdleTimerDisabled = true;
+    }
+    
+    func onStop() {
+        UIApplication.shared.isIdleTimerDisabled = false;
     }
 }
 
