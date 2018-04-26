@@ -17,6 +17,8 @@ class ConfigureController: UIViewController, UIPickerViewDelegate, UIPickerViewD
     internal var descs: [PlanDesc] = []
     internal var curDesc = 0
     
+    internal var savedPlan: Plan? = nil
+    
     override func viewDidLoad() {
         super.viewDidLoad()
     
@@ -40,7 +42,12 @@ class ConfigureController: UIViewController, UIPickerViewDelegate, UIPickerViewD
         }
         
         if (button === saveButton) {
-            // TODO save plan
+            var args: [Int] = []
+            for i in 0..<argTable.numberOfRows(inSection: 0) {
+                let index = IndexPath.init(indexes: [0, i])
+                args.append(Int((argTable.cellForRow(at: index)! as! ConfigArgTableCell).input.text!)!)
+            }
+            savedPlan = descs[curDesc].create(args)
         }
     }
 

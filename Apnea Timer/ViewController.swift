@@ -15,6 +15,7 @@ class ViewController: UIViewController, TimeView {
     @IBOutlet weak var toolBar: UIToolbar!
 
     var model: TimeModel!
+    var plan: Plan!
     
     //MARK: Actions
     @IBAction func tap(_ sender: UITapGestureRecognizer) {
@@ -22,19 +23,23 @@ class ViewController: UIViewController, TimeView {
     }
     
     @IBAction func unwindFromConfigure(sender: UIStoryboardSegue) {
-        // TODO update model with plan
+        if let configController = sender.source as? ConfigureController, let plan = configController.savedPlan {
+            self.plan = plan
+            setModel()
+            update()
+        }
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
         // TODO log book
+        plan = planDescs()[0].makeDefault()
         setModel()
         update()
     }
     
     func setModel() {
-        let plan = planDescs()[0].makeDefault()
-        model = TimeModel.init(plan: plan, view: self, beeper: BeepVibrate.init())
+        model = TimeModel.init(plan: plan.clone(), view: self, beeper: BeepVibrate.init())
     }
 
     override func didReceiveMemoryWarning() {

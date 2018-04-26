@@ -11,6 +11,7 @@ import Foundation
 protocol Plan {
     // Invariant - must return at least one state before terminating
     func nextState() -> PlanState?
+    func clone() -> Plan
 }
 
 struct PlanState {
@@ -107,6 +108,10 @@ class O2Plan: Plan {
             return PlanState.init(time: self.restTime, label: "rest (\(reps))")
         }
     }
+    
+    func clone() -> Plan {
+        return O2Plan.init(reps: self.reps, startTime: self.time, increment: self.increment, restTime: self.restTime)
+    }
 }
 
 class CO2Plan: Plan {
@@ -140,6 +145,10 @@ class CO2Plan: Plan {
             return PlanState.init(time: self.restTime, label: "rest (\(reps))")
         }
     }
+    
+    func clone() -> Plan {
+        return CO2Plan.init(reps: self.reps, time: self.time, restTime: self.restTime, increment: self.increment)
+    }
 }
 
 class OneBreathCO2Plan: Plan {
@@ -167,5 +176,9 @@ class OneBreathCO2Plan: Plan {
             resting = true
             return PlanState.init(time: nil, label: "one breath (\(reps))")
         }
+    }
+    
+    func clone() -> Plan {
+        return OneBreathCO2Plan.init(reps: self.reps, time: self.time)
     }
 }
