@@ -23,6 +23,7 @@ struct PlanState {
 class PlanDesc {
     var name: String
     var args: [String]
+    // TODO defaults
     var create: (_: [Int]) -> Plan
     
     init(name: String, args: [String], create: @escaping (_: [Int]) -> Plan) {
@@ -36,6 +37,13 @@ func planDescs() -> [PlanDesc] {
     return [
         PlanDesc.init(
             name: "O2 table",
+            args: ["reps", "start time (s)", "increment (s)", "rest time (s)"],
+            create: { (args: [Int]) -> Plan in
+                return O2Plan.init(reps: args[0], startTime: args[1], increment: args[2], restTime: args[3])
+            }
+        ),
+        PlanDesc.init(
+            name: "O2 table (exhale)",
             args: ["reps", "start time (s)", "increment (s)", "rest time (s)"],
             create: { (args: [Int]) -> Plan in
                 return O2Plan.init(reps: args[0], startTime: args[1], increment: args[2], restTime: args[3])

@@ -82,7 +82,72 @@
                     <view key="view" contentMode="scaleToFill" id="LsL-r4-3b4">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aSd-Ad-bnu">
+                                <rect key="frame" x="28" y="98" width="320" height="216"/>
+                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </pickerView>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" scrollEnabled="NO" dataMode="prototypes" style="plain" separatorStyle="none" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="gZ3-oO-vbs">
+                                <rect key="frame" x="10" y="324" width="355" height="454"/>
+                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="separatorColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="ConfigArg" id="LeR-Vb-NB5" customClass="ConfigArgTableCell" customModule="Apnea_Timer" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="28" width="355" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="LeR-Vb-NB5" id="esi-A5-3wp">
+                                            <rect key="frame" x="0.0" y="0.0" width="355" height="44"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" distribution="fillProportionally" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="VrG-iP-qHM">
+                                                    <rect key="frame" x="0.0" y="3" width="250" height="30"/>
+                                                    <subviews>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="reps" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fXl-cr-Tdd">
+                                                            <rect key="frame" x="0.0" y="0.0" width="200" height="30"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="width" constant="200" id="7uw-YO-FgY"/>
+                                                            </constraints>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                        <textField opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="6" borderStyle="roundedRect" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="24I-cg-0E1">
+                                                            <rect key="frame" x="205" y="0.0" width="45" height="30"/>
+                                                            <nil key="textColor"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                            <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardType="numberPad" keyboardAppearance="alert" returnKeyType="next" enablesReturnKeyAutomatically="YES" smartDashesType="no" smartInsertDeleteType="no" smartQuotesType="no"/>
+                                                        </textField>
+                                                    </subviews>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="250" id="Xis-Tj-kxq"/>
+                                                    </constraints>
+                                                </stackView>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="VrG-iP-qHM" firstAttribute="leading" secondItem="esi-A5-3wp" secondAttribute="leading" id="2IH-lE-bXH"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <connections>
+                                            <outlet property="input" destination="24I-cg-0E1" id="6Od-2J-RuW"/>
+                                            <outlet property="label" destination="fXl-cr-Tdd" id="pjd-nF-gjD"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </prototypes>
+                            </tableView>
+                        </subviews>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="Z78-1G-whd" firstAttribute="trailing" secondItem="gZ3-oO-vbs" secondAttribute="trailing" constant="10" id="DlI-38-Vtc"/>
+                            <constraint firstItem="Z78-1G-whd" firstAttribute="bottom" secondItem="gZ3-oO-vbs" secondAttribute="bottom" id="Fl6-21-XWF"/>
+                            <constraint firstItem="gZ3-oO-vbs" firstAttribute="leading" secondItem="Z78-1G-whd" secondAttribute="leading" constant="10" id="Udl-eb-XfA"/>
+                            <constraint firstItem="aSd-Ad-bnu" firstAttribute="top" secondItem="Z78-1G-whd" secondAttribute="top" constant="10" id="avN-O9-Mfi"/>
+                            <constraint firstItem="gZ3-oO-vbs" firstAttribute="top" secondItem="aSd-Ad-bnu" secondAttribute="bottom" constant="10" id="ejN-tO-Pki"/>
+                            <constraint firstItem="aSd-Ad-bnu" firstAttribute="centerX" secondItem="Z78-1G-whd" secondAttribute="centerX" id="l85-s3-Sde"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="Z78-1G-whd"/>
                     </view>
                     <navigationItem key="navigationItem" title="Configure" id="8I8-Di-L9I">
@@ -100,7 +165,9 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="argTable" destination="gZ3-oO-vbs" id="tKV-j2-A9C"/>
                         <outlet property="cancelButton" destination="5IX-5I-hpc" id="5jk-Ka-nij"/>
+                        <outlet property="planPicker" destination="aSd-Ad-bnu" id="tij-nw-e22"/>
                         <outlet property="saveButton" destination="EMv-Ks-Yjh" id="oTw-dW-95D"/>
                     </connections>
                 </viewController>
