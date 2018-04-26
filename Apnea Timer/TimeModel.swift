@@ -62,8 +62,10 @@ class TimeModel {
     }
     
     func handleStateChange() {
-        // TODO don't beep on startup or if user tapped start
-        beeper.beep()
+        if state == TimeState.RUNNING {
+            beeper.beep()
+        }
+
         let next = plan.nextState()
         if let next = next {
             if let time = next.time {
