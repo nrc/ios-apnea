@@ -23,13 +23,19 @@ struct PlanState {
 class PlanDesc {
     var name: String
     var args: [String]
-    // TODO defaults
+    var defaults: [Int]
     var create: (_: [Int]) -> Plan
     
-    init(name: String, args: [String], create: @escaping (_: [Int]) -> Plan) {
+    init(name: String, args: [String], defaults: [Int], create: @escaping (_: [Int]) -> Plan) {
         self.name = name
+        assert(args.count == defaults.count)
         self.args = args
+        self.defaults = defaults
         self.create = create
+    }
+    
+    func makeDefault() -> Plan {
+        return self.create(self.defaults)
     }
 }
 
@@ -38,6 +44,7 @@ func planDescs() -> [PlanDesc] {
         PlanDesc.init(
             name: "O2 table",
             args: ["reps", "start time (s)", "increment (s)", "rest time (s)"],
+            defaults: [6, 120, 15, 120],
             create: { (args: [Int]) -> Plan in
                 return O2Plan.init(reps: args[0], startTime: args[1], increment: args[2], restTime: args[3])
             }
@@ -45,6 +52,7 @@ func planDescs() -> [PlanDesc] {
         PlanDesc.init(
             name: "O2 table (exhale)",
             args: ["reps", "start time (s)", "increment (s)", "rest time (s)"],
+            defaults: [7, 30, 10, 60],
             create: { (args: [Int]) -> Plan in
                 return O2Plan.init(reps: args[0], startTime: args[1], increment: args[2], restTime: args[3])
             }
@@ -52,6 +60,7 @@ func planDescs() -> [PlanDesc] {
         PlanDesc.init(
             name: "CO2 table",
             args: ["reps", "time (s)", "starting rest time (s)", "increment (s)"],
+            defaults: [6, 120, 120, 15],
             create: { (args: [Int]) -> Plan in
                 return CO2Plan.init(reps: args[0], time: args[1], restTime: args[2], increment: args[3])
             }
@@ -59,20 +68,12 @@ func planDescs() -> [PlanDesc] {
         PlanDesc.init(
             name: "One breath CO2 table",
             args: ["reps", "time (s)"],
+            defaults: [6, 95],
             create: { (args: [Int]) -> Plan in
                 return OneBreathCO2Plan.init(reps: args[0], time: args[1])
             }
         ),
     ]
-}
-
-func defaultO2Plan() -> Plan {
-    return O2Plan.init(reps: 6, startTime: 120, increment: 15, restTime: 120)
-    // return O2Plan.init(reps: 3, startTime: 10, increment: 2, restTime: 3)
-}
-
-func testOneBreathCO2Plan() -> Plan {
-    return OneBreathCO2Plan(reps: 3, time: 10)
 }
 
 class O2Plan: Plan {

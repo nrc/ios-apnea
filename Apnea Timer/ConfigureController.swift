@@ -20,15 +20,12 @@ class ConfigureController: UIViewController, UIPickerViewDelegate, UIPickerViewD
     override func viewDidLoad() {
         super.viewDidLoad()
     
-        // TODO defaults and current plan
         descs = planDescs()
         
         planPicker.delegate = self
         planPicker.dataSource = self
         argTable.delegate = self
         argTable.dataSource = self
-        // TODO not reloading
-        argTable.reloadData()
     }
     
     override func didReceiveMemoryWarning() {
@@ -77,6 +74,8 @@ class ConfigureController: UIViewController, UIPickerViewDelegate, UIPickerViewD
             fatalError("The dequeued cell is not an instance of ConfigArgTableCell.")
         }
         cell.label.text = descs[curDesc].args[indexPath.row]
+        // TODO should preserve the value if set, and use value from current time
+        cell.input.text = String(descs[curDesc].defaults[indexPath.row])
         return cell
     }
 }
