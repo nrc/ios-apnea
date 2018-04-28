@@ -16,6 +16,7 @@ class ViewController: UIViewController, TimeView {
 
     var model: TimeModel!
     var plan: Plan!
+    var planMemo: ConfigMemo!
     
     //MARK: Actions
     @IBAction func tap(_ sender: UITapGestureRecognizer) {
@@ -24,7 +25,8 @@ class ViewController: UIViewController, TimeView {
     
     @IBAction func unwindFromConfigure(sender: UIStoryboardSegue) {
         if let configController = sender.source as? ConfigureController, let plan = configController.savedPlan {
-            self.plan = plan
+            self.plan = plan.0
+            planMemo = plan.1
             setModel()
             update()
         }
@@ -33,9 +35,19 @@ class ViewController: UIViewController, TimeView {
     override func viewDidLoad() {
         super.viewDidLoad()
         // TODO log book
-        plan = planDescs()[0].makeDefault()
+        let defaultDesc = planDescs()[0]
+        plan = defaultDesc.makeDefault()
+        planMemo = memo(fromDescDefaults: defaultDesc)
         setModel()
         update()
+    }
+
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let navigationController = segue.destination as? UINavigationController {
+            if let configController = navigationController.topViewController as? ConfigureController {
+                configController.curMemo = planMemo
+            }
+        }
     }
     
     func setModel() {

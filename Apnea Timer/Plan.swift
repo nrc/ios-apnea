@@ -21,13 +21,26 @@ struct PlanState {
     var label: String
 }
 
+// PlanIds should be constant over time, i.e., if a PlanDesc changes, it's id must change too.
+// They don't need to be sequential, but there must not be duplicates.
+// Current largest id used: 4
+struct PlanId: Equatable {
+    let value: Int
+    
+    init(_ value: Int) {
+        self.value = value
+    }
+}
+
 class PlanDesc {
+    var id: PlanId
     var name: String
     var args: [String]
     var defaults: [Int]
     var create: (_: [Int]) -> Plan
     
-    init(name: String, args: [String], defaults: [Int], create: @escaping (_: [Int]) -> Plan) {
+    init(id: PlanId, name: String, args: [String], defaults: [Int], create: @escaping (_: [Int]) -> Plan) {
+        self.id = id
         self.name = name
         assert(args.count == defaults.count)
         self.args = args
@@ -43,6 +56,7 @@ class PlanDesc {
 func planDescs() -> [PlanDesc] {
     return [
         PlanDesc.init(
+            id: PlanId.init(0),
             name: "O2 table",
             args: ["reps", "start time (s)", "increment (s)", "rest time (s)"],
             defaults: [6, 120, 15, 120],
@@ -51,6 +65,7 @@ func planDescs() -> [PlanDesc] {
             }
         ),
         PlanDesc.init(
+            id: PlanId.init(2),
             name: "O2 table (exhale)",
             args: ["reps", "start time (s)", "increment (s)", "rest time (s)"],
             defaults: [7, 30, 10, 60],
@@ -59,6 +74,7 @@ func planDescs() -> [PlanDesc] {
             }
         ),
         PlanDesc.init(
+            id: PlanId.init(4),
             name: "CO2 table",
             args: ["reps", "time (s)", "starting rest time (s)", "increment (s)"],
             defaults: [6, 120, 120, 15],
@@ -67,6 +83,7 @@ func planDescs() -> [PlanDesc] {
             }
         ),
         PlanDesc.init(
+            id: PlanId.init(3),
             name: "One breath CO2 table",
             args: ["reps", "time (s)"],
             defaults: [6, 95],

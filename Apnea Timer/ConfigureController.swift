@@ -8,26 +8,42 @@
 
 import UIKit
 
-class ConfigureController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UITableViewDataSource, UITableViewDelegate {
+class ConfigureController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate {
     @IBOutlet weak var saveButton: UIBarButtonItem!
     @IBOutlet weak var cancelButton: UIBarButtonItem!
     @IBOutlet weak var planPicker: UIPickerView!
     @IBOutlet weak var argTable: UITableView!
 
-    internal var descs: [PlanDesc] = []
+    internal var descs: [(PlanDesc, ConfigMemo)] = []
     internal var curDesc = 0
     
-    internal var savedPlan: Plan? = nil
+    internal var savedPlan: (Plan, ConfigMemo)? = nil
+    var curMemo: ConfigMemo? = nil
     
     override func viewDidLoad() {
         super.viewDidLoad()
     
-        descs = planDescs()
+        descs = planDescs().map {  ($0, memo(fromDescDefaults: $0)) }
         
         planPicker.delegate = self
         planPicker.dataSource = self
         argTable.delegate = self
         argTable.dataSource = self
+        
+        if let memo = curMemo {
+            // Look for the memo's id in the descs
+            for i in 0..<descs.count {
+                if descs[i].0.id == memo.plan {
+                    curDesc = i
+                    descs[i].1.args = memo.args
+                    assert(memo.args.count == descs[i].0.args.count, "Saved args do not match args for description")
+                    planPicker.selectRow(i, inComponent: 0, animated: false)
+                    break;
+                }
+            }
+
+            curMemo = nil
+        }
     }
     
     override func didReceiveMemoryWarning() {
@@ -41,13 +57,11 @@ class ConfigureController: UIViewController, UIPickerViewDelegate, UIPickerViewD
             return
         }
         
+        self.view.endEditing(false)
+
         if (button === saveButton) {
-            var args: [Int] = []
-            for i in 0..<argTable.numberOfRows(inSection: 0) {
-                let index = IndexPath.init(indexes: [0, i])
-                args.append(Int((argTable.cellForRow(at: index)! as! ConfigArgTableCell).input.text!)!)
-            }
-            savedPlan = descs[curDesc].create(args)
+            let memo = descs[curDesc].1
+            savedPlan = (descs[curDesc].0.create(memo.args), memo)
         }
     }
 
@@ -60,7 +74,7 @@ class ConfigureController: UIViewController, UIPickerViewDelegate, UIPickerViewD
     }
     
     func pickerView(_ pickerView: UIPickerView, attributedTitleForRow row: Int, forComponent component: Int) -> NSAttributedString? {
-        return NSAttributedString(string: descs[row].name, attributes: [NSAttributedStringKey.foregroundColor: UIColor.white])
+        return NSAttributedString(string: descs[row].0.name, attributes: [NSAttributedStringKey.foregroundColor: UIColor.white])
     }
     
     func pickerView(_ pickerView: UIPickerView,
@@ -74,15 +88,34 @@ class ConfigureController: UIViewController, UIPickerViewDelegate, UIPickerViewD
         return 1
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return descs[curDesc].args.count
+        return descs[curDesc].0.args.count
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "ConfigArg", for: indexPath) as? ConfigArgTableCell else {
             fatalError("The dequeued cell is not an instance of ConfigArgTableCell.")
         }
-        cell.label.text = descs[curDesc].args[indexPath.row]
-        // TODO should preserve the value if set, and use value from current time
-        cell.input.text = String(descs[curDesc].defaults[indexPath.row])
+        cell.label.text = descs[curDesc].0.args[indexPath.row]
+
+        cell.input.text = String(descs[curDesc].1.args[indexPath.row])
+        cell.input.tag = curDesc * 10 + indexPath.row
+        cell.input.delegate = self
+
         return cell
     }
+    
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        let desc = textField.tag / 10
+        let row = textField.tag % 10
+        descs[desc].1.args[row] = Int(textField.text!)!
+    }
+}
+
+// 'Serialisation' of a configured plan
+struct ConfigMemo {
+    var plan: PlanId
+    var args: [Int]
+}
+
+func memo(fromDescDefaults desc: PlanDesc) -> ConfigMemo {
+    return ConfigMemo.init(plan: desc.id, args: desc.defaults)
 }
