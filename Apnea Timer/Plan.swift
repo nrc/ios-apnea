@@ -23,7 +23,7 @@ struct PlanState {
 
 // PlanIds should be constant over time, i.e., if a PlanDesc changes, it's id must change too.
 // They don't need to be sequential, but there must not be duplicates.
-// Current largest id used: 4
+// Current largest id used: 5
 struct PlanId: Equatable {
     let value: Int
     
@@ -90,6 +90,15 @@ func planDescs() -> [PlanDesc] {
             create: { (args: [Int]) -> Plan in
                 return OneBreathCO2Plan.init(reps: args[0], time: args[1])
             }
+        ),
+        PlanDesc.init(
+            id: PlanId.init(5),
+            name: "Max hold",
+            args: [],
+            defaults: [],
+            create: { (args: [Int]) -> Plan in
+                return MaxPlan.init()
+        }
         ),
     ]
 }
@@ -197,5 +206,55 @@ class OneBreathCO2Plan: Plan {
     
     func clone() -> Plan {
         return OneBreathCO2Plan.init(reps: self.reps, time: self.time)
+    }
+}
+
+class MaxPlan: Plan {
+    enum State {
+        case WarmUpRest
+        case WarmUp
+        case MaxRest
+        case Max
+        
+        func next() -> State? {
+            switch self {
+            case State.WarmUpRest:
+                return State.WarmUp
+            case State.WarmUp:
+                return State.MaxRest
+            case State.MaxRest:
+                return State.Max
+            case State.Max:
+                return nil
+            }
+        }
+        
+        func planState() -> PlanState {
+            switch self {
+            case State.WarmUpRest:
+                return PlanState.init(time: 120, label: "rest")
+            case State.WarmUp:
+                return PlanState.init(time: 120, label: "hold")
+            case State.MaxRest:
+                return PlanState.init(time: 300, label: "rest")
+            case State.Max:
+                return PlanState.init(time: nil, label: "max hold")
+            }
+        }
+    }
+    
+    var curState: State? = State.WarmUpRest
+
+    func nextState() -> PlanState? {
+        guard let curState = self.curState else {
+            return nil
+        }
+        let result = curState.planState()
+        self.curState = curState.next()
+        return result
+    }
+    
+    func clone() -> Plan {
+        return MaxPlan.init()
     }
 }

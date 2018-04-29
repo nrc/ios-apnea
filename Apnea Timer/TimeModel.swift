@@ -24,7 +24,6 @@ class TimeModel {
         handleStateChange()
     }
     
-    // TODO timer should keep running if user switches to another app
     func start() {
         if state == TimeState.FRESH || state == TimeState.PAUSED {
             timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: (#selector(TimeModel.tick)), userInfo: nil, repeats: true)
