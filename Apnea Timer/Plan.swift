@@ -10,8 +10,9 @@ import Foundation
 
 protocol Plan {
     // Invariant - must return at least one state before terminating
-    func nextState() -> PlanState?
+    func nextState(elapsedSeconds: Int?) -> PlanState?
     func clone() -> Plan
+    func getRecord() -> Run?
 }
 
 struct PlanState {
@@ -24,7 +25,7 @@ struct PlanState {
 // PlanIds should be constant over time, i.e., if a PlanDesc changes, it's id must change too.
 // They don't need to be sequential, but there must not be duplicates.
 // Current largest id used: 5
-struct PlanId: Equatable {
+struct PlanId: Equatable, Codable {
     let value: Int
     
     init(_ value: Int) {
@@ -37,9 +38,10 @@ class PlanDesc {
     var name: String
     var args: [String]
     var defaults: [Int]
-    var create: (_: [Int]) -> Plan
+    // The PlanDesc arg should always be `self`
+    internal var create: (_: PlanDesc, _: [Int]) -> Plan
     
-    init(id: PlanId, name: String, args: [String], defaults: [Int], create: @escaping (_: [Int]) -> Plan) {
+    init(id: PlanId, name: String, args: [String], defaults: [Int], create: @escaping (_: PlanDesc, _: [Int]) -> Plan) {
         self.id = id
         self.name = name
         assert(args.count == defaults.count)
@@ -49,7 +51,11 @@ class PlanDesc {
     }
     
     func makeDefault() -> Plan {
-        return self.create(self.defaults)
+        return self.create(self, self.defaults)
+    }
+    
+    func make(args: [Int]) -> Plan {
+        return self.create(self, args)
     }
 }
 
@@ -60,7 +66,7 @@ func planDescs() -> [PlanDesc] {
             name: "O2 table",
             args: ["reps", "start time (s)", "increment (s)", "rest time (s)"],
             defaults: [6, 120, 15, 120],
-            create: { (args: [Int]) -> Plan in
+            create: { (desc: PlanDesc, args: [Int]) -> Plan in
                 return O2Plan.init(reps: args[0], startTime: args[1], increment: args[2], restTime: args[3])
             }
         ),
@@ -69,7 +75,7 @@ func planDescs() -> [PlanDesc] {
             name: "O2 table (exhale)",
             args: ["reps", "start time (s)", "increment (s)", "rest time (s)"],
             defaults: [7, 30, 10, 60],
-            create: { (args: [Int]) -> Plan in
+            create: { (desc: PlanDesc, args: [Int]) -> Plan in
                 return O2Plan.init(reps: args[0], startTime: args[1], increment: args[2], restTime: args[3])
             }
         ),
@@ -78,7 +84,7 @@ func planDescs() -> [PlanDesc] {
             name: "CO2 table",
             args: ["reps", "time (s)", "starting rest time (s)", "increment (s)"],
             defaults: [6, 120, 120, 15],
-            create: { (args: [Int]) -> Plan in
+            create: { (desc: PlanDesc, args: [Int]) -> Plan in
                 return CO2Plan.init(reps: args[0], time: args[1], restTime: args[2], increment: args[3])
             }
         ),
@@ -87,7 +93,7 @@ func planDescs() -> [PlanDesc] {
             name: "One breath CO2 table",
             args: ["reps", "time (s)"],
             defaults: [6, 95],
-            create: { (args: [Int]) -> Plan in
+            create: { (desc: PlanDesc, args: [Int]) -> Plan in
                 return OneBreathCO2Plan.init(reps: args[0], time: args[1])
             }
         ),
@@ -96,8 +102,8 @@ func planDescs() -> [PlanDesc] {
             name: "Max hold",
             args: [],
             defaults: [],
-            create: { (args: [Int]) -> Plan in
-                return MaxPlan.init()
+            create: { (desc: PlanDesc, args: [Int]) -> Plan in
+                return MaxPlan.init(desc: desc)
         }
         ),
     ]
@@ -118,7 +124,7 @@ class O2Plan: Plan {
         self.restTime = restTime
     }
     
-    func nextState() -> PlanState? {
+    func nextState(elapsedSeconds: Int?) -> PlanState? {
         if reps <= 0 {
             return nil
         }
@@ -138,6 +144,11 @@ class O2Plan: Plan {
     func clone() -> Plan {
         return O2Plan.init(reps: self.reps, startTime: self.time, increment: self.increment, restTime: self.restTime)
     }
+
+    // TODO
+    func getRecord() -> Run? {
+        return nil
+    }
 }
 
 class CO2Plan: Plan {
@@ -155,7 +166,7 @@ class CO2Plan: Plan {
         self.increment = increment
     }
     
-    func nextState() -> PlanState? {
+    func nextState(elapsedSeconds: Int?) -> PlanState? {
         if reps <= 0 {
             return nil
         }
@@ -175,6 +186,11 @@ class CO2Plan: Plan {
     func clone() -> Plan {
         return CO2Plan.init(reps: self.reps, time: self.time, restTime: self.restTime, increment: self.increment)
     }
+
+    // TODO
+    func getRecord() -> Run? {
+        return nil
+    }
 }
 
 class OneBreathCO2Plan: Plan {
@@ -188,7 +204,7 @@ class OneBreathCO2Plan: Plan {
         self.time = time
     }
     
-    func nextState() -> PlanState? {
+    func nextState(elapsedSeconds: Int?) -> PlanState? {
         if reps <= 0 {
             return nil
         }
@@ -206,6 +222,11 @@ class OneBreathCO2Plan: Plan {
     
     func clone() -> Plan {
         return OneBreathCO2Plan.init(reps: self.reps, time: self.time)
+    }
+
+    // TODO
+    func getRecord() -> Run? {
+        return nil
     }
 }
 
@@ -244,10 +265,21 @@ class MaxPlan: Plan {
     }
     
     var curState: State? = State.WarmUpRest
+    var record: Run
+    var desc: PlanDesc
 
-    func nextState() -> PlanState? {
+    init(desc: PlanDesc) {
+        self.desc = desc
+        self.record = Run.init(desc: desc)
+    }
+   
+    func nextState(elapsedSeconds: Int?) -> PlanState? {
         guard let curState = self.curState else {
             return nil
+        }
+        if curState == State.Max {
+            // TODO currently broken because the timer is not counting the hold
+            record.details.append(RunArg.init(name: "Max hold (s)", value: elapsedSeconds!))
         }
         let result = curState.planState()
         self.curState = curState.next()
@@ -255,6 +287,15 @@ class MaxPlan: Plan {
     }
     
     func clone() -> Plan {
-        return MaxPlan.init()
+        return MaxPlan.init(desc: desc)
+    }
+
+    func getRecord() -> Run? {
+        // Only record a run if we made it pass the warm up
+        if curState == nil {
+            return record
+        } else {
+            return nil
+        }
     }
 }

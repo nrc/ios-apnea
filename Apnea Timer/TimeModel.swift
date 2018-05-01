@@ -34,6 +34,7 @@ class TimeModel {
         }
     }
     
+    // TODO if we stop, then we should tell the plan how many seconds in we stopped at
     func stop() {
         if state == TimeState.RUNNING {
             timer!.invalidate()
@@ -44,6 +45,7 @@ class TimeModel {
         state = TimeState.DONE
     }
     
+    // TODO if we are paused, then our seconds should count up
     func pause() {
         state = TimeState.PAUSED
         timer!.invalidate()
@@ -65,7 +67,8 @@ class TimeModel {
             beeper.beep()
         }
 
-        let next = plan.nextState()
+        // TODO pass elapsedSeconds if paused
+        let next = plan.nextState(elapsedSeconds: nil)
         if let next = next {
             if let time = next.time {
                 seconds = time

@@ -20,6 +20,7 @@ class ConfigureController: UIViewController, UIPickerViewDelegate, UIPickerViewD
     internal var savedPlan: (Plan, ConfigMemo)? = nil
     var curMemo: ConfigMemo? = nil
     
+    // TODO +/- buttons for args
     override func viewDidLoad() {
         super.viewDidLoad()
     
@@ -61,7 +62,7 @@ class ConfigureController: UIViewController, UIPickerViewDelegate, UIPickerViewD
 
         if (button === saveButton) {
             let memo = descs[curDesc].1
-            savedPlan = (descs[curDesc].0.create(memo.args), memo)
+            savedPlan = (descs[curDesc].0.make(args: memo.args), memo)
         }
     }
 

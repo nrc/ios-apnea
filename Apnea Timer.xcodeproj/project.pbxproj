@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		013871AB209805EE006E8763 /* Run.swift in Sources */ = {isa = PBXBuildFile; fileRef = 013871AA209805EE006E8763 /* Run.swift */; };
 		0194FC05208B272B00AE6291 /* TimeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0194FC04208B272B00AE6291 /* TimeModel.swift */; };
 		0194FC07208B2BA100AE6291 /* TimeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0194FC06208B2BA100AE6291 /* TimeView.swift */; };
 		0194FC09208B319800AE6291 /* Plan.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0194FC08208B319800AE6291 /* Plan.swift */; };
@@ -40,6 +41,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		013871AA209805EE006E8763 /* Run.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Run.swift; sourceTree = "<group>"; };
 		0194FC04208B272B00AE6291 /* TimeModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeModel.swift; sourceTree = "<group>"; };
 		0194FC06208B2BA100AE6291 /* TimeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeView.swift; sourceTree = "<group>"; };
 		0194FC08208B319800AE6291 /* Plan.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Plan.swift; sourceTree = "<group>"; };
@@ -121,6 +123,7 @@
 				0194FC08208B319800AE6291 /* Plan.swift */,
 				0194FC0C208C6D4C00AE6291 /* Beeper.swift */,
 				0194FC0E208C854A00AE6291 /* ConfigArg.swift */,
+				013871AA209805EE006E8763 /* Run.swift */,
 			);
 			path = "Apnea Timer";
 			sourceTree = "<group>";
@@ -278,6 +281,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				01C3CDFE1FFA226A0004C70F /* ViewController.swift in Sources */,
+				013871AB209805EE006E8763 /* Run.swift in Sources */,
 				0194FC0D208C6D4C00AE6291 /* Beeper.swift in Sources */,
 				0194FC0F208C854A00AE6291 /* ConfigArg.swift in Sources */,
 				0194FC0B208C59A800AE6291 /* ConfigureController.swift in Sources */,
