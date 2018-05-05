@@ -11,4 +11,6 @@ import UIKit
 class ConfigArgTableCell: UITableViewCell {
     @IBOutlet weak var label: UILabel!
     @IBOutlet weak var input: UITextField!
+    @IBOutlet weak var decrButton: UIButton!
+    @IBOutlet weak var incrButton: UIButton!
 }

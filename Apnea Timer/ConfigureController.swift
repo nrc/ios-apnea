@@ -20,7 +20,6 @@ class ConfigureController: UIViewController, UIPickerViewDelegate, UIPickerViewD
     internal var savedPlan: (Plan, ConfigMemo)? = nil
     var curMemo: ConfigMemo? = nil
     
-    // TODO +/- buttons for args
     override func viewDidLoad() {
         super.viewDidLoad()
     
@@ -98,7 +97,10 @@ class ConfigureController: UIViewController, UIPickerViewDelegate, UIPickerViewD
         cell.label.text = descs[curDesc].0.args[indexPath.row]
 
         cell.input.text = String(descs[curDesc].1.args[indexPath.row])
-        cell.input.tag = curDesc * 10 + indexPath.row
+        let tag = curDesc * 10 + indexPath.row
+        cell.input.tag = tag
+        cell.incrButton.tag = tag
+        cell.decrButton.tag = tag
         cell.input.delegate = self
 
         return cell
@@ -108,6 +110,25 @@ class ConfigureController: UIViewController, UIPickerViewDelegate, UIPickerViewD
         let desc = textField.tag / 10
         let row = textField.tag % 10
         descs[desc].1.args[row] = Int(textField.text!)!
+    }
+
+    // The `-` `+` buttons
+    @IBAction func decr(_ sender: UIButton) {
+        incrOrDecr(sender, diff: -1)
+    }
+    @IBAction func incr(_ sender: UIButton) {
+        incrOrDecr(sender, diff: 1)
+    }
+    func incrOrDecr(_ sender: UIButton, diff: Int) {
+        let desc = sender.tag / 10
+        let row = sender.tag % 10
+        descs[desc].1.args[row] += diff
+        if let cell = argTable.cellForRow(at: IndexPath(row: row, section: 0)) as? ConfigArgTableCell {
+            var value = Int(cell.input.text!)!
+            value += diff
+            cell.input.text = String(value)
+        }
+
     }
 }
 
