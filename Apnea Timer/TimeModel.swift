@@ -37,13 +37,12 @@ class TimeModel {
         }
     }
     
-    // TODO if we stop, then we should tell the plan how many seconds in we stopped at
     func stop() {
         if state == TimeState.RUNNING || state == TimeState.PAUSED {
             timer!.invalidate()
             state = TimeState.DONE
             self.view.onStop()
-            plan.onStop(seconds)
+            plan.onStop(elapsedSeconds: seconds)
         }
     }
     

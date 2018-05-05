@@ -68,7 +68,7 @@ func planDescs() -> [PlanDesc] {
             args: ["reps", "start time (s)", "increment (s)", "rest time (s)"],
             defaults: [6, 120, 15, 120],
             create: { (desc: PlanDesc, args: [Int]) -> Plan in
-                return O2Plan.init(reps: args[0], startTime: args[1], increment: args[2], restTime: args[3])
+                return O2Plan.init(desc: desc, reps: args[0], startTime: args[1], increment: args[2], restTime: args[3])
             }
         ),
         PlanDesc.init(
@@ -77,7 +77,7 @@ func planDescs() -> [PlanDesc] {
             args: ["reps", "start time (s)", "increment (s)", "rest time (s)"],
             defaults: [7, 30, 10, 60],
             create: { (desc: PlanDesc, args: [Int]) -> Plan in
-                return O2Plan.init(reps: args[0], startTime: args[1], increment: args[2], restTime: args[3])
+                return O2Plan.init(desc: desc, reps: args[0], startTime: args[1], increment: args[2], restTime: args[3])
             }
         ),
         PlanDesc.init(
@@ -86,7 +86,7 @@ func planDescs() -> [PlanDesc] {
             args: ["reps", "time (s)", "starting rest time (s)", "increment (s)"],
             defaults: [6, 120, 120, 15],
             create: { (desc: PlanDesc, args: [Int]) -> Plan in
-                return CO2Plan.init(reps: args[0], time: args[1], restTime: args[2], increment: args[3])
+                return CO2Plan.init(desc: desc, reps: args[0], time: args[1], restTime: args[2], increment: args[3])
             }
         ),
         PlanDesc.init(
@@ -95,7 +95,7 @@ func planDescs() -> [PlanDesc] {
             args: ["reps", "time (s)"],
             defaults: [6, 95],
             create: { (desc: PlanDesc, args: [Int]) -> Plan in
-                return OneBreathCO2Plan.init(reps: args[0], time: args[1])
+                return OneBreathCO2Plan.init(desc: desc, reps: args[0], time: args[1])
             }
         ),
         PlanDesc.init(
@@ -118,11 +118,21 @@ class O2Plan: Plan {
     
     var resting: Bool = false
     
-    init(reps: Int, startTime: Int, increment: Int, restTime: Int) {
+    var record: Run
+    var desc: PlanDesc
+
+    init(desc: PlanDesc, reps: Int, startTime: Int, increment: Int, restTime: Int) {
         self.reps = reps
         self.time = startTime
         self.increment = increment
         self.restTime = restTime
+
+        self.desc = desc
+        self.record = Run.init(desc: desc)
+        self.record.args[0].value = reps
+        self.record.args[1].value = startTime
+        self.record.args[2].value = increment
+        self.record.args[3].value = restTime
     }
     
     func nextState(elapsedSeconds: Int?) -> PlanState? {
@@ -143,15 +153,21 @@ class O2Plan: Plan {
     }
     
     func clone() -> Plan {
-        return O2Plan.init(reps: self.reps, startTime: self.time, increment: self.increment, restTime: self.restTime)
+        return O2Plan.init(desc: desc, reps: self.reps, startTime: self.time, increment: self.increment, restTime: self.restTime)
     }
 
-    // TODO
     func getRecord() -> Run? {
-        return nil
+        if reps > 0 {
+            let completedReps = self.record.args[0].value - reps
+            record.completedReps = completedReps
+            if completedReps == 0 {
+                return nil
+            }
+        }
+        return record
     }
     func onStop(elapsedSeconds: Int) {
-        
+        // FIXME record the time for the set where the user stopped as a detail
     }
 }
 
@@ -163,11 +179,21 @@ class CO2Plan: Plan {
     
     var resting: Bool = false
     
-    init(reps: Int, time: Int, restTime: Int, increment: Int) {
+    var record: Run
+    var desc: PlanDesc
+
+    init(desc: PlanDesc, reps: Int, time: Int, restTime: Int, increment: Int) {
         self.reps = reps
         self.time = time
         self.restTime = restTime
         self.increment = increment
+        
+        self.desc = desc
+        self.record = Run.init(desc: desc)
+        self.record.args[0].value = reps
+        self.record.args[1].value = time
+        self.record.args[2].value = restTime
+        self.record.args[3].value = increment
     }
     
     func nextState(elapsedSeconds: Int?) -> PlanState? {
@@ -192,15 +218,21 @@ class CO2Plan: Plan {
     }
     
     func clone() -> Plan {
-        return CO2Plan.init(reps: self.reps, time: self.time, restTime: self.restTime, increment: self.increment)
+        return CO2Plan.init(desc: desc, reps: self.reps, time: self.time, restTime: self.restTime, increment: self.increment)
     }
 
-    // TODO
     func getRecord() -> Run? {
-        return nil
+        if reps > 0 {
+            let completedReps = self.record.args[0].value - reps
+            record.completedReps = completedReps
+            if completedReps == 0 {
+                return nil
+            }
+        }
+        return record
     }
     func onStop(elapsedSeconds: Int) {
-        
+        // FIXME record the time for the set where the user stopped as a detail
     }
 }
 
@@ -210,7 +242,15 @@ class OneBreathCO2Plan: Plan {
     
     var resting: Bool = true
     
-    init(reps: Int, time: Int) {
+    var record: Run
+    var desc: PlanDesc
+    
+    init(desc: PlanDesc, reps: Int, time: Int) {
+        self.desc = desc
+        self.record = Run.init(desc: desc)
+        self.record.args[0].value = reps
+        self.record.args[1].value = time
+
         self.reps = reps
         self.time = time
     }
@@ -224,6 +264,7 @@ class OneBreathCO2Plan: Plan {
             resting = false
             let result = PlanState.init(time: self.time, label: "hold (\(reps))")
             reps -= 1
+            record.details.append(RunArg.init(name: "hold (s)", value: elapsedSeconds!))
             return result
         } else {
             resting = true
@@ -232,15 +273,22 @@ class OneBreathCO2Plan: Plan {
     }
     
     func clone() -> Plan {
-        return OneBreathCO2Plan.init(reps: self.reps, time: self.time)
+        return OneBreathCO2Plan.init(desc: self.desc, reps: self.reps, time: self.time)
     }
 
-    // TODO
     func getRecord() -> Run? {
-        return nil
+        if record.details.count < self.record.args[0].value {
+            record.completedReps = record.details.count
+        }
+        if record.details.count == 0 {
+            return nil
+        } else {
+            return record
+        }
     }
     func onStop(elapsedSeconds: Int) {
-        
+        // FIXME record the time for the set where the user stopped as a detail
+        // We can't do this just yet, because we rely on the number of details being the number of reps
     }
 }
 
