@@ -25,55 +25,68 @@ class TimeModel {
     }
     
     func start() {
-        if state == TimeState.FRESH || state == TimeState.PAUSED {
-            timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: (#selector(TimeModel.tick)), userInfo: nil, repeats: true)
-            if state == TimeState.FRESH {
-                self.view.onStart()
-            }
+        if state == TimeState.PAUSED {
+            timer!.invalidate()
+            handleStateChange()
+            self.view.update()
+      }
+        if state == TimeState.FRESH {
             state = TimeState.RUNNING
+            self.view.onStart()
+            startTimer()
         }
     }
     
     // TODO if we stop, then we should tell the plan how many seconds in we stopped at
     func stop() {
-        if state == TimeState.RUNNING {
-            timer!.invalidate()
-        }
         if state == TimeState.RUNNING || state == TimeState.PAUSED {
+            timer!.invalidate()
             self.view.onStop()
         }
         state = TimeState.DONE
     }
     
-    // TODO if we are paused, then our seconds should count up
-    func pause() {
-        state = TimeState.PAUSED
-        timer!.invalidate()
+    func startTimer() {
+        timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: (#selector(TimeModel.tick)), userInfo: nil, repeats: true)
     }
     
     @objc func tick() {
-        if state != TimeState.RUNNING {
-            return
+        assert(state != TimeState.FRESH)
+        assert(state != TimeState.DONE)
+        if state == TimeState.PAUSED {
+            seconds += 1
         }
-        seconds -= 1
-        if seconds <= 0 {
-            handleStateChange()
+        if state == TimeState.RUNNING {
+            seconds -= 1
+            if seconds <= 0 {
+                timer!.invalidate()
+                handleStateChange()
+            }
         }
         self.view.update()
     }
     
+    // Pre-condition: timer should be invalid
     func handleStateChange() {
         if state == TimeState.RUNNING {
             beeper.beep()
         }
 
-        // TODO pass elapsedSeconds if paused
-        let next = plan.nextState(elapsedSeconds: nil)
+        let next = plan.nextState(elapsedSeconds: seconds)
         if let next = next {
             if let time = next.time {
                 seconds = time
+                if state != TimeState.FRESH {
+                    state = TimeState.RUNNING
+                }
             } else {
-                pause()
+                seconds = 0
+                if state != TimeState.FRESH {
+                    state = TimeState.PAUSED
+                }
+            }
+            if state != TimeState.FRESH {
+                startTimer()
             }
             label = next.label
         } else {
@@ -83,10 +96,6 @@ class TimeModel {
     }
     
     func timeLabel() -> String {
-        if state == TimeState.PAUSED {
-            return "-:--"
-        }
-
         let minutes = self.seconds / 60
         let seconds = self.seconds % 60
         return String(format: "\(minutes):%02d", seconds)

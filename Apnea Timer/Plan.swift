@@ -179,7 +179,11 @@ class CO2Plan: Plan {
             return result
         } else {
             resting = true
-            return PlanState.init(time: self.restTime, label: "rest (\(reps))")
+            var rest: Int? = self.restTime
+            if rest! < 0 {
+                rest = nil
+            }
+            return PlanState.init(time: rest, label: "rest (\(reps))")
         }
     }
     
