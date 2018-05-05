@@ -15,7 +15,8 @@ class Run: Codable {
     var description: String
     var args: [RunArg]
     var details: [RunArg] = []
-    var completedReps: Int? = 0
+    // nil = complete the whole plan
+    var completedReps: Int? = nil
     
     init(desc: PlanDesc) {
         self.plan = desc.id

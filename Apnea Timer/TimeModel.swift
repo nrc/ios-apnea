@@ -41,9 +41,10 @@ class TimeModel {
     func stop() {
         if state == TimeState.RUNNING || state == TimeState.PAUSED {
             timer!.invalidate()
+            state = TimeState.DONE
             self.view.onStop()
+            plan.onStop(seconds)
         }
-        state = TimeState.DONE
     }
     
     func startTimer() {

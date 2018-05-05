@@ -12,6 +12,7 @@ protocol Plan {
     // Invariant - must return at least one state before terminating
     func nextState(elapsedSeconds: Int?) -> PlanState?
     func clone() -> Plan
+    func onStop(elapsedSeconds: Int)
     func getRecord() -> Run?
 }
 
@@ -149,6 +150,9 @@ class O2Plan: Plan {
     func getRecord() -> Run? {
         return nil
     }
+    func onStop(elapsedSeconds: Int) {
+        
+    }
 }
 
 class CO2Plan: Plan {
@@ -195,6 +199,9 @@ class CO2Plan: Plan {
     func getRecord() -> Run? {
         return nil
     }
+    func onStop(elapsedSeconds: Int) {
+        
+    }
 }
 
 class OneBreathCO2Plan: Plan {
@@ -231,6 +238,9 @@ class OneBreathCO2Plan: Plan {
     // TODO
     func getRecord() -> Run? {
         return nil
+    }
+    func onStop(elapsedSeconds: Int) {
+        
     }
 }
 
@@ -282,7 +292,6 @@ class MaxPlan: Plan {
             return nil
         }
         if curState == State.Max {
-            // TODO currently broken because the timer is not counting the hold
             record.details.append(RunArg.init(name: "Max hold (s)", value: elapsedSeconds!))
         }
         let result = curState.planState()
@@ -295,11 +304,24 @@ class MaxPlan: Plan {
     }
 
     func getRecord() -> Run? {
-        // Only record a run if we made it pass the warm up
-        if curState == nil {
+        // Only record a run if we made it to the warm up
+        if curState != State.WarmUpRest {
             return record
         } else {
             return nil
         }
+    }
+
+    func onStop(elapsedSeconds: Int) {
+        if curState == State.Max {
+            record.details.append(RunArg.init(name: "Max hold (s)", value: elapsedSeconds))
+        } else {
+            record.completedReps = 0
+            if curState == State.WarmUp {
+                record.details.append(RunArg.init(name: "Warm up (s)", value: elapsedSeconds))
+            }
+        }
+
+        curState = nil
     }
 }
