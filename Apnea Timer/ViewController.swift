@@ -32,6 +32,9 @@ class ViewController: UIViewController, TimeView {
         }
     }
 
+    @IBAction func unwindFromLogBook(sender: UIStoryboardSegue) {
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // TODO log book

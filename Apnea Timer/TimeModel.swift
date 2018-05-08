@@ -43,6 +43,9 @@ class TimeModel {
             state = TimeState.DONE
             self.view.onStop()
             plan.onStop(elapsedSeconds: seconds)
+            if let record = plan.getRecord() {
+                save(record: record)
+            }
         }
     }
     

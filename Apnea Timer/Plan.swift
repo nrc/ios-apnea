@@ -12,6 +12,7 @@ protocol Plan {
     // Invariant - must return at least one state before terminating
     func nextState(elapsedSeconds: Int?) -> PlanState?
     func clone() -> Plan
+    // the timer calls the plan's onStop when it is stopped, either by the plan or by the user
     func onStop(elapsedSeconds: Int)
     func getRecord() -> Run?
 }
@@ -361,6 +362,9 @@ class MaxPlan: Plan {
     }
 
     func onStop(elapsedSeconds: Int) {
+        if curState == nil {
+            return
+        }
         if curState == State.Max {
             record.details.append(RunArg.init(name: "Max hold (s)", value: elapsedSeconds))
         } else {

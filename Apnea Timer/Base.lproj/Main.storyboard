@@ -42,6 +42,12 @@
                                         </connections>
                                     </barButtonItem>
                                     <barButtonItem systemItem="flexibleSpace" id="Fjf-1u-feG"/>
+                                    <barButtonItem systemItem="bookmarks" id="Py8-B2-LLX">
+                                        <connections>
+                                            <segue destination="eh0-bq-45c" kind="presentation" id="QVN-yp-X35"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="INv-RP-JYi"/>
                                     <barButtonItem systemItem="stop" id="Ujc-Fc-4vC"/>
                                     <barButtonItem systemItem="flexibleSpace" id="LNd-e9-otW"/>
                                 </items>
@@ -219,6 +225,81 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fMo-kB-0DT" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1264.8" y="139.65517241379311"/>
+        </scene>
+        <!--Log book-->
+        <scene sceneID="SW9-nh-mPp">
+            <objects>
+                <viewController id="Eh9-Aa-Dne" customClass="LogBookController" customModule="Apnea_Timer" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="9L5-im-UAs">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" alwaysBounceVertical="YES" scrollEnabled="NO" dataMode="prototypes" style="plain" separatorStyle="none" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="3zu-9R-qBa" userLabel="Log Table">
+                                <rect key="frame" x="10" y="102" width="355" height="676"/>
+                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="separatorColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="LogEntry" id="RtH-je-9bz" customClass="LogTableCell" customModule="Apnea_Timer" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="28" width="355" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="RtH-je-9bz" id="Crk-n2-r6m">
+                                            <rect key="frame" x="0.0" y="0.0" width="355" height="44"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </tableViewCellContentView>
+                                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    </tableViewCell>
+                                </prototypes>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="3zu-9R-qBa" firstAttribute="top" secondItem="pfg-vQ-yGZ" secondAttribute="top" constant="10" id="IPV-Tx-eIX"/>
+                            <constraint firstItem="3zu-9R-qBa" firstAttribute="leading" secondItem="pfg-vQ-yGZ" secondAttribute="leading" constant="10" id="Js4-Dv-VSr"/>
+                            <constraint firstItem="pfg-vQ-yGZ" firstAttribute="trailing" secondItem="3zu-9R-qBa" secondAttribute="trailing" constant="10" id="OhI-4i-ivI"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="pfg-vQ-yGZ"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="Log book" id="sWF-Yk-AhV">
+                        <barButtonItem key="leftBarButtonItem" systemItem="done" id="S1N-RV-6qd">
+                            <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <connections>
+                                <segue destination="Qq8-5c-VQT" kind="unwind" unwindAction="unwindFromLogBookWithSender:" id="oaR-jy-7Rq"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="logTable" destination="3zu-9R-qBa" id="itJ-rU-0xF"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="oM0-cs-SlH" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="Qq8-5c-VQT" userLabel="Exit" sceneMemberID="exit"/>
+            </objects>
+            <point key="canvasLocation" x="2205.5999999999999" y="846.79802955665025"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="WTQ-3R-8Vg">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="eh0-bq-45c" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="0Kb-2W-PbJ">
+                        <rect key="frame" x="0.0" y="44" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="barTintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <textAttributes key="titleTextAttributes">
+                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </textAttributes>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="Eh9-Aa-Dne" kind="relationship" relationship="rootViewController" id="Eaq-5Y-Hjw"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="iOI-nD-R0u" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1265" y="847"/>
         </scene>
     </scenes>
 </document>
