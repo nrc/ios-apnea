@@ -265,7 +265,7 @@ class OneBreathCO2Plan: Plan {
             resting = false
             let result = PlanState.init(time: self.time, label: "hold (\(reps))")
             reps -= 1
-            record.details.append(RunArg.init(name: "hold (s)", value: elapsedSeconds!))
+            record.details.append(RunArg.init(name: "rest (s)", value: elapsedSeconds!))
             return result
         } else {
             resting = true

@@ -37,7 +37,7 @@ class ViewController: UIViewController, TimeView {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // TODO log book
+
         let defaultDesc = planDescs()[0]
         plan = defaultDesc.makeDefault()
         planMemo = memo(fromDescDefaults: defaultDesc)
@@ -68,12 +68,12 @@ class ViewController: UIViewController, TimeView {
     
     func onStart() {
         UIApplication.shared.isIdleTimerDisabled = true;
-        toolBar.items![3] = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.stop, target: self, action: #selector(ViewController.tapStopButton))
+        toolBar.items![5] = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.stop, target: self, action: #selector(ViewController.tapStopButton))
     }
     
     func onStop() {
         UIApplication.shared.isIdleTimerDisabled = false;
-        toolBar.items![3] = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.refresh, target: self, action: #selector(ViewController.tapRestartButton))
+        toolBar.items![5] = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.refresh, target: self, action: #selector(ViewController.tapRestartButton))
     }
     
     @objc func tapStopButton() {

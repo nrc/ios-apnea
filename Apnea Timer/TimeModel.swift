@@ -44,7 +44,7 @@ class TimeModel {
             self.view.onStop()
             plan.onStop(elapsedSeconds: seconds)
             if let record = plan.getRecord() {
-                save(record: record)
+                DataManager.getDataManager().append(record: record)
             }
         }
     }

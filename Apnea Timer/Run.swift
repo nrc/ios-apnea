@@ -12,7 +12,7 @@ import Foundation
 
 class Run: Codable {
     var plan: PlanId
-    var description: String
+    var planName: String
     var args: [RunArg]
     var details: [RunArg] = []
     // nil = complete the whole plan
@@ -20,7 +20,7 @@ class Run: Codable {
     
     init(desc: PlanDesc) {
         self.plan = desc.id
-        self.description = desc.name
+        self.planName = desc.name
         self.args = desc.args.map { RunArg.init(name: $0) }
     }
 }
