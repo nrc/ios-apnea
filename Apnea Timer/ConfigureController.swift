@@ -30,6 +30,7 @@ class ConfigureController: UIViewController, UIPickerViewDelegate, UIPickerViewD
         argTable.delegate = self
         argTable.dataSource = self
         
+        var setDefaults: [Int] = []
         if let memo = curMemo {
             // Look for the memo's id in the descs
             for i in 0..<descs.count {
@@ -38,13 +39,28 @@ class ConfigureController: UIViewController, UIPickerViewDelegate, UIPickerViewD
                     descs[i].1.args = memo.args
                     assert(memo.args.count == descs[i].0.args.count, "Saved args do not match args for description")
                     planPicker.selectRow(i, inComponent: 0, animated: false)
+                    setDefaults.append(i)
                     break;
                 }
             }
 
             curMemo = nil
         }
-        // TODO if not curMemo, we should pull the defaults by searching the log book, rather than using the default args
+
+        let logBook = DataManager.getDataManager().records.reversed()
+        for i in 0..<descs.count {
+            if setDefaults.contains(i) {
+                // Don't search the logbook for the plan on the main screen.
+                continue
+            }
+            for log in logBook {
+                if log.plan == descs[i].0.id {
+                    assert(log.args.count == descs[i].0.args.count, "Saved args do not match args for description")
+                    descs[i].1.args = log.args.map { $0.value }
+                    break
+                }
+            }
+        }
     }
     
     override func didReceiveMemoryWarning() {
@@ -141,4 +157,8 @@ struct ConfigMemo {
 
 func memo(fromDescDefaults desc: PlanDesc) -> ConfigMemo {
     return ConfigMemo.init(plan: desc.id, args: desc.defaults)
+}
+
+func memo(fromRun run: Run) -> ConfigMemo {
+    return ConfigMemo.init(plan: run.plan, args: run.args.map { $0.value })
 }

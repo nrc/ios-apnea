@@ -38,9 +38,27 @@ class ViewController: UIViewController, TimeView {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        let defaultDesc = planDescs()[0]
-        plan = defaultDesc.makeDefault()
-        planMemo = memo(fromDescDefaults: defaultDesc)
+        // Try to initialise the plan from the last logged session. If that
+        // fails because the log book is empty, or we don't have the plan
+        // description any more, use the first default plan.
+        let logBook = DataManager.getDataManager().records
+        var initedPlan = false
+        if let last = logBook.last {
+            let descs = planDescs()
+            for desc in descs {
+                if desc.id == last.plan {
+                    plan = desc.make(args: last.args.map { $0.value })
+                    planMemo = memo(fromRun: last)
+                    initedPlan = true
+                    break
+                }
+            }
+        }
+        if !initedPlan {
+            let defaultDesc = planDescs()[0]
+            plan = defaultDesc.makeDefault()
+            planMemo = memo(fromDescDefaults: defaultDesc)
+        }
         setModel()
         update()
     }
