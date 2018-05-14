@@ -22,7 +22,7 @@ class ViewController: UIViewController, TimeView {
     @IBAction func tap(_ sender: UITapGestureRecognizer) {
         self.model.start()
     }
-    
+
     @IBAction func unwindFromConfigure(sender: UIStoryboardSegue) {
         if let configController = sender.source as? ConfigureController, let plan = configController.savedPlan {
             self.plan = plan.0

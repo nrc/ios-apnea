@@ -29,10 +29,12 @@ class TimeModel {
             timer!.invalidate()
             handleStateChange()
             self.view.update()
-      }
+        }
         if state == TimeState.FRESH {
             state = TimeState.RUNNING
             self.view.onStart()
+            seconds -= 1
+            self.view.update()
             startTimer()
         }
     }
@@ -61,7 +63,7 @@ class TimeModel {
         }
         if state == TimeState.RUNNING {
             seconds -= 1
-            if seconds <= 0 {
+            if seconds < 0 {
                 timer!.invalidate()
                 handleStateChange()
             }

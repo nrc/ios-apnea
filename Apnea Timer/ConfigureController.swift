@@ -44,6 +44,7 @@ class ConfigureController: UIViewController, UIPickerViewDelegate, UIPickerViewD
 
             curMemo = nil
         }
+        // TODO if not curMemo, we should pull the defaults by searching the log book, rather than using the default args
     }
     
     override func didReceiveMemoryWarning() {
