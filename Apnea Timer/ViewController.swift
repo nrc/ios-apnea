@@ -86,12 +86,12 @@ class ViewController: UIViewController, TimeView {
     
     func onStart() {
         UIApplication.shared.isIdleTimerDisabled = true;
-        toolBar.items![5] = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.stop, target: self, action: #selector(ViewController.tapStopButton))
+        toolBar.items![5] = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.stop, target: self, action: #selector(ViewController.tapStopButton))
     }
     
     func onStop() {
         UIApplication.shared.isIdleTimerDisabled = false;
-        toolBar.items![5] = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.refresh, target: self, action: #selector(ViewController.tapRestartButton))
+        toolBar.items![5] = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.refresh, target: self, action: #selector(ViewController.tapRestartButton))
     }
     
     @objc func tapStopButton() {

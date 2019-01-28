@@ -91,7 +91,7 @@ class ConfigureController: UIViewController, UIPickerViewDelegate, UIPickerViewD
     }
     
     func pickerView(_ pickerView: UIPickerView, attributedTitleForRow row: Int, forComponent component: Int) -> NSAttributedString? {
-        return NSAttributedString(string: descs[row].0.name, attributes: [NSAttributedStringKey.foregroundColor: UIColor.white])
+        return NSAttributedString(string: descs[row].0.name, attributes: [NSAttributedString.Key.foregroundColor: UIColor.white])
     }
     
     func pickerView(_ pickerView: UIPickerView,

@@ -16,7 +16,7 @@ class LogBookController: UIViewController, UITableViewDataSource, UITableViewDel
         
         logTable.delegate = self
         logTable.dataSource = self
-        logTable.rowHeight = UITableViewAutomaticDimension
+        logTable.rowHeight = UITableView.automaticDimension
     }
 
     func numberOfSections(in tableView: UITableView) -> Int {
