@@ -28,7 +28,6 @@ class ViewController: UIViewController, TimeView {
             self.plan = plan.0
             planMemo = plan.1
             setModel()
-            update()
         }
     }
 
@@ -60,7 +59,6 @@ class ViewController: UIViewController, TimeView {
             planMemo = memo(fromDescDefaults: defaultDesc)
         }
         setModel()
-        update()
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -73,6 +71,7 @@ class ViewController: UIViewController, TimeView {
     
     func setModel() {
         model = TimeModel.init(plan: plan.clone(), view: self, beeper: BeepVibrate.init())
+        update()
     }
 
     override func didReceiveMemoryWarning() {
@@ -100,6 +99,5 @@ class ViewController: UIViewController, TimeView {
     
     @objc func tapRestartButton() {
         setModel()
-        update()
     }
 }

@@ -295,13 +295,17 @@ class OneBreathCO2Plan: Plan {
 
 class MaxPlan: Plan {
     enum State {
+        case Fresh
         case WarmUpRest
         case WarmUp
         case MaxRest
         case Max
+        case Done
         
-        func next() -> State? {
+        func next() -> State {
             switch self {
+            case State.Fresh:
+                return State.WarmUpRest
             case State.WarmUpRest:
                 return State.WarmUp
             case State.WarmUp:
@@ -309,12 +313,16 @@ class MaxPlan: Plan {
             case State.MaxRest:
                 return State.Max
             case State.Max:
-                return nil
+                return State.Done
+            case State.Done:
+                return State.Done
             }
         }
         
-        func planState() -> PlanState {
+        func planState() -> PlanState? {
             switch self {
+            case State.Fresh:
+                fatalError()
             case State.WarmUpRest:
                 return PlanState.init(time: 120, label: "rest")
             case State.WarmUp:
@@ -323,11 +331,13 @@ class MaxPlan: Plan {
                 return PlanState.init(time: 300, label: "rest")
             case State.Max:
                 return PlanState.init(time: nil, label: "max hold")
+            case State.Done:
+                return nil
             }
         }
     }
     
-    var curState: State? = State.WarmUpRest
+    var curState: State = State.Fresh
     var record: Run
     var desc: PlanDesc
 
@@ -337,14 +347,11 @@ class MaxPlan: Plan {
     }
    
     func nextState(elapsedSeconds: Int?) -> PlanState? {
-        guard let curState = self.curState else {
-            return nil
+        if curState == State.Done {
+            fatalError()
         }
-        if curState == State.Max {
-            record.details.append(RunArg.init(name: "Max hold (s)", value: elapsedSeconds!))
-        }
+        curState = curState.next()
         let result = curState.planState()
-        self.curState = curState.next()
         return result
     }
     
@@ -354,7 +361,7 @@ class MaxPlan: Plan {
 
     func getRecord() -> Run? {
         // Only record a run if we made it to the warm up
-        if curState != State.WarmUpRest {
+        if curState != State.WarmUpRest && curState != State.Fresh {
             return record
         } else {
             return nil
@@ -362,10 +369,7 @@ class MaxPlan: Plan {
     }
 
     func onStop(elapsedSeconds: Int) {
-        if curState == nil {
-            return
-        }
-        if curState == State.Max {
+        if curState == State.Max || curState == State.Done {
             record.details.append(RunArg.init(name: "Max hold (s)", value: elapsedSeconds))
         } else {
             record.completedReps = 0
@@ -374,6 +378,6 @@ class MaxPlan: Plan {
             }
         }
 
-        curState = nil
+        curState = State.Done
     }
 }

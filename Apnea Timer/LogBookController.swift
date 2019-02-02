@@ -31,7 +31,6 @@ class LogBookController: UIViewController, UITableViewDataSource, UITableViewDel
         }
 
         let datum = DataManager.getDataManager().records[indexPath.row]
-        print(datum)
         cell.planName.text = datum.planName
         if let reps = datum.completedReps {
             cell.repsCount.text = String(reps)

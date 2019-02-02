@@ -21,40 +21,44 @@ class TimeModel {
         self.view = view
         self.plan = plan
         self.beeper = beeper
-        handleStateChange()
+        update_from_plan(plan: self.plan.nextState(elapsedSeconds: 0)!)
     }
     
-    func start() {
-        if state == TimeState.PAUSED {
-            timer!.invalidate()
+    internal func start() {
+        if state == TimeState.PAUSED || state == TimeState.FRESH {
+            self.view.onStart()
             handleStateChange()
             self.view.update()
-        }
-        if state == TimeState.FRESH {
-            state = TimeState.RUNNING
-            self.view.onStart()
-            seconds -= 1
-            self.view.update()
-            startTimer()
         }
     }
     
     func stop() {
         if state == TimeState.RUNNING || state == TimeState.PAUSED {
-            timer!.invalidate()
-            state = TimeState.DONE
+            if let _ = timer {
+                stopTimer()
+            }
             self.view.onStop()
             plan.onStop(elapsedSeconds: seconds)
             if let record = plan.getRecord() {
                 DataManager.getDataManager().append(record: record)
             }
+            state = TimeState.DONE
+            label = "done"
+            self.view.update()
         }
     }
     
-    func startTimer() {
+    internal func startTimer() {
         timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: (#selector(TimeModel.tick)), userInfo: nil, repeats: true)
     }
     
+    internal func stopTimer() {
+        if let timer = timer {
+            timer.invalidate()
+        }
+        self.timer = nil
+    }
+
     @objc func tick() {
         assert(state != TimeState.FRESH)
         assert(state != TimeState.DONE)
@@ -63,41 +67,52 @@ class TimeModel {
         }
         if state == TimeState.RUNNING {
             seconds -= 1
-            if seconds < 0 {
-                timer!.invalidate()
-                handleStateChange()
-            }
+        }
+
+        if seconds == 0 {
+            handleStateChange()
         }
         self.view.update()
     }
     
-    // Pre-condition: timer should be invalid
-    func handleStateChange() {
+    internal func handleStateChange() {
+        stopTimer()
+
         if state == TimeState.RUNNING {
             beeper.beep()
         }
 
-        let next = plan.nextState(elapsedSeconds: seconds)
-        if let next = next {
-            if let time = next.time {
-                seconds = time
-                if state != TimeState.FRESH {
-                    state = TimeState.RUNNING
-                }
+        if state != TimeState.FRESH {
+            let next = plan.nextState(elapsedSeconds: seconds)
+            if let next = next {
+                update_from_plan(plan: next)
             } else {
-                seconds = 0
-                if state != TimeState.FRESH {
-                    state = TimeState.PAUSED
-                }
+                stop()
+                return
             }
-            if state != TimeState.FRESH {
-                startTimer()
-            }
-            label = next.label
-        } else {
-            label = "done"
-            stop()
         }
+
+        if seconds == 0 {
+            state = TimeState.PAUSED
+        } else {
+            state = TimeState.RUNNING
+        }
+        startTimer()
+    }
+
+    internal func update_from_plan(plan: PlanState) {
+        if let time = plan.time {
+            seconds = time
+            if state != TimeState.FRESH {
+                state = TimeState.RUNNING
+            }
+        } else {
+            seconds = 0
+            if state != TimeState.FRESH {
+                state = TimeState.PAUSED
+            }
+        }
+        label = plan.label
     }
     
     func timeLabel() -> String {
@@ -114,6 +129,7 @@ class TimeModel {
 enum TimeState {
     case FRESH
     case RUNNING
+    // Either paused or running but counting up
     case PAUSED
     case DONE
 }
