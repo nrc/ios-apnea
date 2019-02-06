@@ -35,7 +35,7 @@ class DataManager {
     }
     
     func append(record: Run) {
-        records.append(record)
+        records.insert(record, at: 0)
         save()
     }
     
