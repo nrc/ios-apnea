@@ -106,6 +106,15 @@ func planDescs() -> [PlanDesc] {
             defaults: [],
             create: { (desc: PlanDesc, args: [Int]) -> Plan in
                 return MaxPlan.init(desc: desc)
+            }
+        ),
+        PlanDesc.init(
+            id: PlanId.init(6),
+            name: "Breathe",
+            args: ["reps", "inhale", "exhale"],
+            defaults: [15, 5, 7],
+            create: { (desc: PlanDesc, args: [Int]) -> Plan in
+                return BreathePlan.init(desc: desc, reps: args[0], inhale: args[1], exhale: args[2])
         }
         ),
     ]
@@ -380,4 +389,57 @@ class MaxPlan: Plan {
 
         curState = State.Done
     }
+}
+
+class BreathePlan: Plan {
+    var reps: Int
+    var inhale: Int
+    var exhale: Int
+    
+    var record: Run
+    var desc: PlanDesc
+    
+    var inhaling: Bool = false
+    
+    init(desc: PlanDesc, reps: Int, inhale: Int, exhale: Int) {
+        self.reps = reps
+        self.inhale = inhale
+        self.exhale = exhale
+        
+        self.desc = desc
+        self.record = Run.init(desc: desc)
+        self.record.args[0].value = reps
+        self.record.args[1].value = inhale
+        self.record.args[2].value = exhale
+    }
+    
+    func nextState(elapsedSeconds: Int?) -> PlanState? {
+        if reps <= 0 && !inhaling {
+            return nil
+        }
+
+        inhaling = !inhaling
+        if inhaling {
+            reps -= 1
+            return PlanState.init(time: inhale, label: "inhale")
+        }
+        
+        return PlanState.init(time: exhale, label: "exhale")
+    }
+    
+    func clone() -> Plan {
+        return BreathePlan.init(desc: desc, reps: self.reps, inhale: self.inhale, exhale: self.exhale)
+    }
+    
+    func getRecord() -> Run? {
+        if reps > 0 {
+            let completedReps = self.record.args[0].value - reps
+            record.completedReps = completedReps
+            if completedReps == 0 {
+                return nil
+            }
+        }
+        return record
+    }
+    func onStop(elapsedSeconds: Int) {}
 }
