@@ -119,11 +119,20 @@ func planDescs() -> [PlanDesc] {
         ),
         PlanDesc.init(
             id: PlanId.init(7),
-            name: "Pranic breathing",
-            args: ["reps", "inhale", "hold in", "exhale", "hold out"],
-            defaults: [10, 8, 32, 16, 8],
+            name: "Pranic breathing (4)",
+            args: ["reps", "count"],
+            defaults: [10, 8],
             create: { (desc: PlanDesc, args: [Int]) -> Plan in
-                return PranicPlan.init(desc: desc, reps: args[0], inhale: args[1], holdIn: args[2], exhale: args[3], holdOut: args[4])
+                return PranicPlan4.init(desc: desc, reps: args[0], count: args[1])
+        }
+        ),
+        PlanDesc.init(
+            id: PlanId.init(8),
+            name: "Pranic breathing (3)",
+            args: ["reps", "count"],
+            defaults: [10, 8],
+            create: { (desc: PlanDesc, args: [Int]) -> Plan in
+                return PranicPlan3.init(desc: desc, reps: args[0], count: args[1])
         }
         ),
     ]
@@ -453,7 +462,7 @@ class BreathePlan: Plan {
     func onStop(elapsedSeconds: Int) {}
 }
 
-class PranicPlan: Plan {
+class PranicPlan4: Plan {
     enum State {
         case Fresh
         case Exhale
@@ -503,20 +512,17 @@ class PranicPlan: Plan {
 
     var state: State = State.Fresh
 
-    init(desc: PlanDesc, reps: Int, inhale: Int, holdIn: Int, exhale: Int, holdOut: Int) {
+    init(desc: PlanDesc, reps: Int, count: Int) {
         self.reps = reps
-        self.inhale = inhale
-        self.holdIn = holdIn
-        self.exhale = exhale
-        self.holdOut = holdOut
+        inhale = count
+        holdIn = count * 4
+        exhale = count * 2
+        holdOut = count
 
         self.desc = desc
         self.record = Run.init(desc: desc)
         self.record.args[0].value = reps
-        self.record.args[1].value = inhale
-        self.record.args[2].value = holdIn
-        self.record.args[3].value = exhale
-        self.record.args[4].value = holdOut
+        self.record.args[1].value = count
     }
 
     func nextState(elapsedSeconds: Int?) -> PlanState? {
@@ -552,7 +558,7 @@ class PranicPlan: Plan {
     }
 
     func clone() -> Plan {
-        return PranicPlan.init(desc: desc, reps: self.reps, inhale: self.inhale, holdIn: self.holdIn, exhale: self.exhale, holdOut: self.holdOut)
+        return PranicPlan4.init(desc: desc, reps: self.reps, count: self.inhale)
     }
 
     func getRecord() -> Run? {
@@ -566,5 +572,109 @@ class PranicPlan: Plan {
         return record
     }
 
+    func onStop(elapsedSeconds: Int) {}
+}
+
+class PranicPlan3: Plan {
+    enum State {
+        case Fresh
+        case Exhale
+        case Inhale
+        case HoldIn
+        
+        func next() -> State {
+            switch self {
+            case State.Fresh:
+                return State.Exhale
+            case State.Exhale:
+                return State.Inhale
+            case State.Inhale:
+                return State.HoldIn
+            case State.HoldIn:
+                return State.Exhale
+            }
+        }
+        
+        func label() -> String {
+            switch self {
+            case State.Fresh:
+                return ""
+            case State.Exhale:
+                return "exhale"
+            case State.Inhale:
+                return "inhale"
+            case State.HoldIn:
+                return "hold"
+            }
+        }
+    }
+    
+    var reps: Int
+    var inhale: Int
+    var holdIn: Int
+    var exhale: Int
+    
+    var record: Run
+    var desc: PlanDesc
+    
+    var state: State = State.Fresh
+    
+    init(desc: PlanDesc, reps: Int, count: Int) {
+        self.reps = reps
+        inhale = count
+        holdIn = count * 4
+        exhale = count * 2
+        
+        self.desc = desc
+        self.record = Run.init(desc: desc)
+        self.record.args[0].value = reps
+        self.record.args[1].value = count
+    }
+    
+    func nextState(elapsedSeconds: Int?) -> PlanState? {
+        if reps <= 0 && state == State.HoldIn {
+            return nil
+        }
+        
+        var time = 0
+        repeat {
+            state = state.next()
+            time = self.nextTime()
+            if state == State.Exhale {
+                reps -= 1
+            }
+        } while time == 0
+        
+        return PlanState.init(time: time, label: state.label())
+    }
+    
+    internal func nextTime() -> Int {
+        switch self.state {
+        case State.Fresh:
+            return 0
+        case State.Exhale:
+            return self.exhale
+        case State.Inhale:
+            return self.inhale
+        case State.HoldIn:
+            return self.holdIn
+        }
+    }
+    
+    func clone() -> Plan {
+        return PranicPlan3.init(desc: desc, reps: self.reps, count: self.inhale)
+    }
+    
+    func getRecord() -> Run? {
+        if reps > 0 {
+            let completedReps = self.record.args[0].value - reps
+            record.completedReps = completedReps
+            if completedReps == 0 {
+                return nil
+            }
+        }
+        return record
+    }
+    
     func onStop(elapsedSeconds: Int) {}
 }
