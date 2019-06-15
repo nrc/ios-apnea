@@ -37,17 +37,20 @@ class ConfigureController: UIViewController, UIPickerViewDelegate, UIPickerViewD
                 if descs[i].0.id == memo.plan {
                     curDesc = i
                     descs[i].1.args = memo.args
-                    assert(memo.args.count == descs[i].0.args.count, "Saved args do not match args for description")
+                    if memo.args.count != descs[i].0.args.count {
+                        // Saved args do not match args for description.
+                        continue;
+                    }
                     planPicker.selectRow(i, inComponent: 0, animated: false)
                     setDefaults.append(i)
                     break;
                 }
-            }
+            } 
 
             curMemo = nil
         }
 
-        let logBook = DataManager.getDataManager().records.reversed()
+        let logBook = DataManager.getDataManager().records
         for i in 0..<descs.count {
             if setDefaults.contains(i) {
                 // Don't search the logbook for the plan on the main screen.
@@ -55,7 +58,10 @@ class ConfigureController: UIViewController, UIPickerViewDelegate, UIPickerViewD
             }
             for log in logBook {
                 if log.plan == descs[i].0.id {
-                    assert(log.args.count == descs[i].0.args.count, "Saved args do not match args for description")
+                    if log.args.count != descs[i].0.args.count {
+                        // Saved args do not match args for description.
+                        continue;
+                    }
                     descs[i].1.args = log.args.map { $0.value }
                     break
                 }

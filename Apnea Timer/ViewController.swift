@@ -42,7 +42,7 @@ class ViewController: UIViewController, TimeView {
         // description any more, use the first default plan.
         let logBook = DataManager.getDataManager().records
         var initedPlan = false
-        if let last = logBook.last {
+        if let last = logBook.first {
             let descs = planDescs()
             for desc in descs {
                 if desc.id == last.plan {
